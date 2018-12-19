@@ -1,0 +1,82 @@
+/* CSS Document */
+/** {
+	font-family: 'Noto Sans TC', sans-serif !important;
+}*/
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  margin: 80px 0 5px 0;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-scroll-radius: 4px;
+  border-radius: 4px;
+  background: rgb(219,219,219);
+}
+#window {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  font-size: 28px;
+}
+.color-white {
+	color: white !important;
+}
+.btn-size-big {
+	width: 280px !important;
+}
+.btn-size-normal {
+	width: 120px !important;
+}
+.btn-size-small {
+	width: 100px !important;
+}
+.btn-0 {
+	background-color: #53A0DB !important;
+}
+.btn-1 {
+	background-color: #F6D389!important;
+}
+.btn-2 {
+	background-color: #F6F889!important;
+}
+.btn-3 {
+	background-color: #C4F889 !important;
+}
+.btn-4 {
+	background-color: #C4F8D6 !important;
+}
+.btn-5 {
+	background-color: white !important;
+}
+.btn-6 {
+	background-color: black !important;
+}
+.btn-7 {
+	background-color: #E2E2E2 !important;
+}
+.btn-color {
+	width: 100px !important;
+	height: 100px !important;
+}
+.vh-100 {
+    height: 100vh !important;
+}
+.vh-89 {
+    height: 89vh !important;
+}
+.container-chat {
+	margin-top: 56px;
+	height: 90vh !important;
+}
+.msg-margin {
+/*
+	margin-bottom: 62px;
+	padding-right: 6px;
+	padding-left: 12px;
+*/
+}

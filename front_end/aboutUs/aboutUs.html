@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/theme.css" type="text/css">
+  <link rel="stylesheet" href="css/aboutUs.css" type="text/css">
+  <link rel="stylesheet" href="css/chat.css" type="text/css">
+</head>
+<body>
+  <!--navbar-->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container"> 
+      <a class="navbar-brand" href="#">
+      <!--icon-->
+        <i class="big black microchip icon"></i>
+        <b> Chat Bot</b>
+      </a> 
+      <div class="collapse navbar-collapse" id="navbar11">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item"><a class="nav-link" href="#"><i class="big black  home icon"></i>Home</a></li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a class="nav-link" href="https://github.com/kksweet8845/ChatBot-web_design" target="_blank"><i class="big black github icon"></i>Github</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="homePage">
+  </div>
+  <div class="headerText">
+    <h1 class="ui center aligned header">Chat Bot</h1>
+  </div>
+  <div class="ui container" id="chatIntro">
+    <h1 class="ui icon center aligned huge header">
+      <i class="massive comments outline icon"></i>
+      <div class="content">
+        <div class="sub header">Let every one can design their own chat robot.</div>
+      </div>
+    </h1>
+  </div>
+  <!--personal intrduction-->
+  <div class="py-5 text-center" id="personal">
+    <div class="container">
+      <div class="row">
+        <div class="mx-auto col-md-12">
+          <h1 class="mb-3">Meet the team</h1>
+        </div>
+      </div>
+      <div class="row" >
+        <div class="col-lg-5-new col-5 p-4" id="member1" > 
+          <img >
+          <div class="member_content">
+            <h4> <b>王皓玄</b> </h4>
+            <p>Job</p>
+            <p class="mb-0">C/C++ , python</p>
+          </div>
+        </div>
+        <div class="col-lg-5-new col-5 p-4 " id="member2"> 
+            <img>
+            <div class="member_content">
+              <h4>戴宏諺</h4>
+              <p>Server & About Us</p>
+              <p class="mb-0">C/C++ , NodeJs</p>
+            </div>
+        </div>
+        <div class="col-lg-5-new col-5 p-4" id="member3"> 
+          <img>
+          <div class="member_content">
+            <h4>林慶瑞</h4>
+            <p>Semantic analysis algorithm</p>
+            <p class="mb-0">C/C++ , Javascript </p>
+          </div>
+        </div>
+        <div class="col-lg-5-new col-5 p-4 " id="member4"> 
+          <img>
+          <div class="member_content">
+            <h4>蔡慶霖</h4>
+            <p>ChatBot UI Design</p>
+            <p class="mb-0">C/C++ </p>
+          </div>
+        </div>
+        <div class="col-lg-5-new col-5 p-4" id="member5"> 
+          <img>
+          <div class="member_content">
+            <h4>張復凱</h4>
+            <p>About Us</p>
+            <p class="mb-0">C/C++ </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="body">
+  		<div id="chat-circle" class="btn btn-raised">
+        <div id="chat-overlay"></div>
+		    	<i class="large comment outline icon"></i>
+			</div>
+  	<div class="chat-box">
+    	<div class="chat-box-header">
+      	ChatBot
+      	<span class="chat-box-toggle"><i class="close icon"></i></span>
+    	</div>
+    	<div class="chat-box-body">
+      	<div class="chat-box-overlay">
+      	</div>
+      	<div class="chat-logs">
+
+      	</div><!--chat-log -->
+    	</div>
+    	<div class="chat-input">
+      	<form>
+        	<input type="text" id="chat-input" placeholder="Send a message..."/>
+      	<button type="submit" class="chat-submit" id="chat-submit"><i class="large blue paper plane icon"></i></button>
+      	</form>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui vertical footer">
+    <p>Copyright ChatBot</p>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+  <script type="text/javascript" src="js/chat.js"></script>
+  <script type="text/javascript" src="js/aboutUs.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,308 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chatbot Generator</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet">
+
+<!-- CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="styles/index.css">
+<link id="bubblestyle" rel="stylesheet" href="styles/bubblestyle1.css">
+<link id="bubblestyleleft" rel="stylesheet" href="styles/bubblestyle(left).css">
+<link id="fontstyle" rel="stylesheet" href="styles/fontstyle2.css">
+<!--Select fontstyle(.css)-->
+<link id="fontstyle2" rel="stylesheet" href="styles/fontstyle4.css">
+<!--Select boldfont(.css) or normalfont(.css)-->
+
+<!-- Scripts -->
+<script src="./scripts/main.js"></script>
+<script src="./scripts/jquery.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> -->
+<script src="./scripts/fontsize.js"></script>
+<script src="./scripts/fontstyle.js"></script>
+<script src="./scripts/bubble.js"></script>
+</head>
+
+<body>
+<!-- Top NavBar -->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top justify-content-end"> <a class="navbar-brand ml-5" href="index.html" >Chatbot Builder</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar"> <span class="navbar-toggler-icon"></span> </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav mr-auto">
+    </ul>
+    <ul class="navbar-nav">
+      <li class="nav-item"> <a class="nav-link btn" data-toggle="modal" data-target="#modal_about_us">About us</a> </li>
+    </ul>
+  </div>
+</nav>
+<!-- Container -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col container-chat">
+      <div class="row">
+        <div class="col chat_window bg-light">
+          <div class="display_section" style="height: calc(100vh - 180px);" id = "window"> </div>
+          <div class="input-group mt-3">
+            <input type="text" class="form-control input_section" placeholder="Ask question here!" aria-label="Ask question here!" aria-describedby="btn_ask" id = "userQuestion">
+            <div class="input-group-append">
+              <button class="btn btn-primary btn-size-small" type="submit" id="btn_ask">Ask</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="margin-top: 70px">
+      <div class="input-group input-group-lg">
+        <div class="input-group-prepend"> <span class="input-group-text" id="inputGroup-sizing-lg">Question</span> </div>
+        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" id="txt_question">
+      </div>
+      <div class="input-group mt-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            <input type="radio" class="ml-3" aria-label="Radio button for following text input">
+            <p class="h5 ml-4 mt-2">Text</p>
+          </div>
+        </div>
+        <input type="text" class="form-control" aria-label="Text input with radio button">
+      </div>
+      <div class="input-group mt-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            <input type="radio" class="ml-3" aria-label="Radio button for following text input">
+            <p class="h5 ml-1 mt-2">Image</p>
+          </div>
+        </div>
+        <input class="mt-3 ml-2 h5" type="file" name="fileUpload">
+      </div>
+      <img class="img-thumbnail w-25 mt-2" src="resources/IMG.png" alt="Demo Image"><br>
+      <button type="button" class="btn btn-primary mt-2">Submit</button>
+    </div>
+  </div>
+</div>
+<!-- Botton NavBar -->
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-bottom justify-content-end"> <a class="navbar-brand ml-5" href="index.html" >Toolbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar_btm"> <span class="navbar-toggler-icon"></span> </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar_btm">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropup"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_bubble" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bubble</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown_bubble">
+          <button class="dropdown-item" data-toggle="modal" data-target="#modal_bubble_color">Bubble Color</button>
+          <button class="dropdown-item" data-toggle="modal" data-target="#modal_bubble_style">Bubble Style</button>
+        </div>
+      </li>
+      <li class="nav-item dropup"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_bg" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Background</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown_bg">
+          <button class="dropdown-item" data-toggle="modal" data-target="#modal_bg_color">Background Color</button>
+          <button class="dropdown-item" data-toggle="modal" data-target="#modal_bg_image">Background Image</button>
+        </div>
+      </li>
+      <li class="nav-item dropup"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_font" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Font</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown_bg">
+          <button class="dropdown-item" data-toggle="modal" data-target="#modal_font_style">Font Style</button>
+          <button class="dropdown-item" data-toggle="modal" data-target="#modal_font_color">Font Color</button>
+          <button class="dropdown-item" data-toggle="modal" data-target="#modal_font_size">Font Size</button>
+        </div>
+      </li>
+    </ul>
+    <ul class="navbar-nav">
+      <div class="row">
+        <button class="btn btn-light btn-size-small mr-2 ml-2" data-toggle="modal" data-target="#modal_upload">Upload</button>
+        <button class="btn btn-light btn-size-small mr-2 ml-2">Generate</button>
+        <button class="btn btn-light btn-size-small mr-2">Save</button>
+      </div>
+    </ul>
+  </div>
+</nav>
+<div class="modal fade" id="modal_bubble_color" tabindex="-1" role="dialog" aria-labelledby="label_bubble_color" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="label_bubble_color">Edit Bubble Color</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+      </div>
+      <div class="modal-body">
+        <button class="btn btn-color mt-1 btn-red" id="bubble_red"></button>
+        <button class="btn btn-color mt-1 btn-org" id="bubble_org"></button>
+        <button class="btn btn-color mt-1 btn-yel" id="bubble_yel"></button>
+        <button class="btn btn-color mt-1 btn-gre" id="bubble_gre"></button>
+        <button class="btn btn-color mt-1 btn-blu" id="bubble_blu"></button>
+        <button class="btn btn-color mt-1 btn-whi" id="bubble_whi">WHITE</button>
+        <button class="btn btn-color mt-1 btn-blk" id="bubble_blk"></button>
+        <button class="btn btn-color mt-1 btn-gry" id="bubble_gry"></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modal_bubble_style" tabindex="-1" role="dialog" aria-labelledby="label_bubble_style" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="label_bubble_style">Edit Bubble Style</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+      </div>
+      <div class="modal-body">Coming soon..</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modal_bg_color" tabindex="-1" role="dialog" aria-labelledby="label_bg_color" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="label_bg_color">Edit Background Color</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+      </div>
+      <div class="modal-body">
+        <button class="btn btn-color mt-1 btn-red" id="bg_red"></button>
+        <button class="btn btn-color mt-1 btn-org" id="bg_org"></button>
+        <button class="btn btn-color mt-1 btn-yel" id="bg_yel"></button>
+        <button class="btn btn-color mt-1 btn-gre" id="bg_gre"></button>
+        <button class="btn btn-color mt-1 btn-blu" id="bg_blu"></button>
+        <button class="btn btn-color mt-1 btn-whi" id="bg_whi">WHITE</button>
+        <button class="btn btn-color mt-1 btn-blk" id="bg_blk"></button>
+        <button class="btn btn-color mt-1 btn-gry" id="bg_gry"></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modal_bg_image" tabindex="-1" role="dialog" aria-labelledby="label_bg_image" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="label_bg_image">Edit Background Image</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+      </div>
+      <div class="modal-body">Coming soon..</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modal_font_style" tabindex="-1" role="dialog" aria-labelledby="label_font_style" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="label_font_style">Edit Font Style</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+      </div>
+      <div class="modal-body">
+        <button class="btn btn-lg mt-1 btn-light" id="font_a" onclick="ChangeFontStyle1()" style="font-family:DFKai-sb !important">標楷體</button>
+        <button class="btn btn-lg mt-1 btn-light" id="font_b" onclick="ChangeFontStyle2()" style="font-family:PMingLiU !important">新細明體</button>
+        <button class="btn btn-lg mt-1 btn-light" id="font_c" onclick="ChangeFontStyle3()" style="font-family:Microsoft JhengHei !important">微軟正黑體</button>
+        <button class="btn btn-lg mt-1 btn-light" id="font_d" onclick="ChangeFontStyle4()" style="font-weight:normal !important">細體</button>
+        <button class="btn btn-lg mt-1 btn-light" id="font_e" onclick="ChangeFontStyle5()" style="font-weight:bold !important">粗體</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modal_font_color" tabindex="-1" role="dialog" aria-labelledby="label_font_color" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="label_font_color">Edit Font Color</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+      </div>
+      <div class="modal-body">
+        <button class="btn btn-color mt-1 btn-red" id="font_red"></button>
+        <button class="btn btn-color mt-1 btn-org" id="font_org"></button>
+        <button class="btn btn-color mt-1 btn-yel" id="font_yel"></button>
+        <button class="btn btn-color mt-1 btn-gre" id="font_gre"></button>
+        <button class="btn btn-color mt-1 btn-blu" id="font_blu"></button>
+        <button class="btn btn-color mt-1 btn-whi" id="font_whi">WHITE</button>
+        <button class="btn btn-color mt-1 btn-blk" id="font_blk"></button>
+        <button class="btn btn-color mt-1 btn-gry" id="font_gry"></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modal_font_size" tabindex="-1" role="dialog" aria-labelledby="label_font_size" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="label_font_size">Edit Font Size</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+      </div>
+      <div class="modal-body">
+        <button class="btn btn-lg mt-1 btn-light" id="enlarge_font_size">A+</button>
+        <button class="btn btn-lg mt-1 btn-light" id="decrease_font_size">A-</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modal_about_us" tabindex="-1" role="dialog" aria-labelledby="label_about_us" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="label_about_us">About US</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+      </div>
+      <div class="modal-body">
+        <p class="h5">組長 : 林慶瑞 - 資訊108</p>
+        <p class="h5">組員 : 王皓玄 - 資訊108</p>
+        <p class="h5">組員 : 戴宏諺 - 資訊110</p>
+        <p class="h5">組員 : 張復凱 - 電機109</p>
+        <p class="h5">組員 : 蔡慶霖 - 電機109</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modal_upload" tabindex="-1" role="dialog" aria-labelledby="label_upload" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="label_upload">Upload file</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" name="fileInfo" enctype="multipart/form-data">
+          <input type="file" name="fileUpload">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary" data-dismiss="modal" id = "submt">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts --> 
+
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> --> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
