@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="description" content="ChatBot Builder 是一個能夠協助不會寫程式的使用者依照個人需求設計Chatbot的一項工具。
+" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="renderer" content="webkit">
+
+<title>ChatBot Builder</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/jquery-ui.min.css" rel="stylesheet">
+<link href="css/notosanstc.css" rel="stylesheet"> 
+<link href="css/reset.css" rel="stylesheet">
+<link href="css/notosanstc.css" rel="stylesheet">
+<link href="css/common.css" rel="stylesheet">
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+<script src="js/google_analytics.js"></script>
+<script src="js/js.cookie.js"></script>
+<script src="js/common.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/jQuery.md5.js"></script>
+
+<style type="text/css">
+
+/* WebKit browsers*/
+input::-webkit-input-placeholder {
+	color: #d6d6d6;
+	font-size: 17px;
+}
+/* Mozilla Firefox 4 to 18*/
+input:-moz-placeholder {
+	color: #d6d6d6;
+	font-size: 17px;
+}
+/* Mozilla Firefox 19+*/
+input::-moz-placeholder {
+	color: #d6d6d6;
+	font-size: 17px;
+}
+/* Internet Explorer 10+*/
+input:-ms-input-placeholder {
+	color: #d6d6d6;
+	font-size: 17px;
+}
+.form-input {
+	max-width: 555px;
+	height: 49px;
+}
+</style>
+
+<!--Form Validation-->
+<script type="text/javascript">
+	$(function() {
+		$(".step2").hide();
+		$(".step3").hide();
+		/* 帳號：不能為空 不能超過16 */
+		var optionUserName = [{"empty":"",err:"請輸入帳號"},{"reg":/^[^\s]+$/,err:"不能有空格"},{"maxlength":16,err:"長度超過16"},{"reg":/^[A-Za-z0-9_]+$/,err:"隻能使用數字、英文、下劃線"}];
+		/* 電子郵件： 不能為空 不能超過50 格式 */
+		var optionEmail = [{"empty":"",err:"請輸入電子郵件"},{"maxlength":50,err:"長度超過50"},{"reg":/^[^\s]+$/,err:"不能有空格"},{"reg":/^[A-Za-z_0-9\u4e00-\u9fa5\.]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,err:"電子郵件格式錯誤"}];
+		/* 密碼： 不能為空 不能超過16 不能低於6 */
+		var optionPasswd = [{"empty":"",err:"請輸入密碼"},{"maxlength":16,err:"長度超過16"},{"minlength":6,err:"長度短於6"},{"reg":/^[^\s]+$/,err:"不能有空格"},{"reg":/^.*[^\d].*$/,err:"不能純數字"},{"reg2":/^[a-zA-Z]+$/,err:"不能純英文"}];
+		/* 重覆密碼： 不能為空 不能超過16  不能低於6 與密碼相同 */
+		var optionPasswd_confirm = [{"empty":"",err:"請輸入密碼"},{"maxlength":16,err:"長度超過16"},{"minlength":6,err:"長度短於6"},{"reg":/^[^\s]+$/,err:"不能有空格"},{"reg":/^.*[^\d].*$/,err:"不能純數字"},{"reg2":/^[a-zA-Z]+$/,err:"不能純英文"},{"same":$("#passwd"),err:" 您兩次輸入的密碼不一致"}];
+
+		/* 用戶名：不能為空 不能超過16 */
+		//用戶名提示
+		$("#username").on("propertychange input", function(){
+			check_input($("#username"),$(".usernamemsg"), optionUserName);
+		});
+		//郵箱提示
+		$("#email").on("propertychange input", function(){
+			check_input($("#email"),$(".emailmsg"), optionEmail);
+		});
+		//密碼
+		$("#passwd").on("propertychange input", function(){
+			check_input($("#passwd"),$(".passwdmsg"), optionPasswd);
+			console.log($("#passwd_confirm").val());
+			if($("#passwd_confirm").val() != ""){
+				check_input($("#passwd_confirm"),$(".passwd_confirmmsg"), optionPasswd_confirm);
+			}
+		});
+		//重覆密碼
+		$("#passwd_confirm").on("propertychange input", function(){
+			check_input($("#passwd_confirm"),$(".passwd_confirmmsg"), optionPasswd_confirm);
+		});
+
+		
+		$("#deveBtn").on("click", function() {
+			//彈出框
+			$("#agreementDialog").dialog({
+				resizable : false,
+				height : 849,
+				width : 1229,
+				modal : true,
+				position : {
+					my : "center top-50%",
+					at : "center"
+				}
+			});
+		});
+		
+		$(".agreesub").on("click", function() {
+			$("#agreementDialog").dialog("close");
+		});
+
+		
+		$("#account_reg").on("click", function() {
+			if ($("#checked")[0].checked == false) {
+				$(".checkedemsg").html('請同意 ChatBot使用條款');
+				return;
+			}else{
+				$(".checkedemsg").html('');
+			}
+			if(check_input($("#username"),$(".usernamemsg"), optionUserName)
+					&& check_input($("#email"),$(".emailmsg"), optionEmail)
+					&& check_input($("#passwd"),$(".passwdmsg"), optionPasswd)
+					&& check_input($("#passwd_confirm"),$(".passwd_confirmmsg"), optionPasswd_confirm)
+					&& check_input($("#reg_vcode"),$(".reg_vcodemsg"), optionReg_vcode)){
+
+				passwd = $.md5($.md5($("#sub").find("#passwd").val())+ "QdIZK4Pmmwgu7KTj");
+				passwd_confirm = $.md5($.md5($("#sub").find("#passwd_confirm").val())+ "QdIZK4Pmmwgu7KTj");
+				$.post("register_account_do",
+						{
+					username:$("#sub").find("#username").val(),
+					email:$("#sub").find("#email").val(),
+					passwd:passwd,
+					passwd_confirm:passwd_confirm,
+					vcode:$("#sub").find("#reg_vcode").val()
+						},
+					function(data){
+						if (data.type == "vcode") {
+							$(".reg_vcodemsg").html(data.msg);
+						} else if (data.status == "ok") {
+							$(".progress-bar_step2").removeClass("hidden");
+							$(".step1").hide();
+							$(".step2").show();
+						} else {
+							/* alert(data.msg); */
+							$(".regfailmsg").html(data.msg);
+						}
+					},
+					"json");
+			}
+
+		});
+
+	});
+</script>
+</head>
+<body class="backgroundcolorf4 color666">
+<!--引入頭部頁面-->
+<nav class="navbar navbar-default baseNav noborder minheight70 minheight56-768 nomarginbottom" role="navigation" style="z-index: 101;border-radius: 0;text-align: left;" data-cls="baseNav" >
+	<div class="container" >
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed buttontop" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand hidden-sm hidden-md logo" href="https://chatbot.hmkrl.com:11021/index.html"></a>
+		</div>
+		<a class="text-center visible-md visible-sm paddingtop30 logo" href="https://chatbot.hmkrl.com:11021/index.html" style="margin: auto;"></a>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-left">
+				<li>
+					<a target="_blank">About Us</a>
+				</li>
+				<li>
+					<a target="_blank">GitHub</a>
+				</li>				
+			</ul>
+						
+			<ul class="nav navbar-nav navbar-right">		  		
+			  		<li>
+						<a href="" class="user-btn login">登入</a>
+					</li>
+					<li>
+						<a href="" class="user-btn reg">註冊</a>
+					</li>				
+			</ul>
+
+		</div>
+	</div>
+</nav>
+
+<div class="enterToPageTop mouseFinger displaynone">
+</div>
+
+<div style="display: none;">
+		<!-- 添加输入框错误显示 -->
+		<div id="errorMsgModal">
+			<div class="  fonts14 nopaddingtop" style="color: #7f8590;padding-top: 0px;	color: red;	font-size: 12px;" ></div>
+		</div>
+		<!-- 发送邮件错误提示 -->
+		<div id="emailDialog" title="提示信息" class="text-center">
+			<span class="color_gray fonts14"></span>
+		</div>
+</div>
+
+	<div class="height58"></div>
+
+	<div class="container-fluid maxwidth1170 margin0auto" >
+		<!-- 進度條  -->
+		<div class="row">
+			<div class="col-xs-4 text-center">填寫基本資料</div>
+		</div>
+		<br />
+		<div class="row">
+			<div class="progress height8 maxwidth1170 backgroundcoloreb">
+				<div class="progress-bar progress-bar-info progress-bar_step1 width33p" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+					<span class="sr-only fonts18">填寫基本資料</span>
+				</div>
+			</div>
+		</div>
+		<!-- 進度條To表單的高度  -->
+		<div class="height70 hidden-xs"></div>
+		<!-- 表單  -->
+		<form role="form" class="form-horizontal maxwidth1050" id="sub" action="/session/signUp" method="post">
+			<!-- 第一步  填寫基本資料  -->
+			<div class="step1">
+				<div class="row">
+					<label for="username" class="col-md-3 col-sm-4 control-label rightm992 fonts18 nofontweight">帳號 </label>
+					<div class="col-md-6 col-sm-8 height73">
+						<input type="text" class="form-control form-input fonts18 paddingleft20 " maxlength="16" id="username" name="username" placeholder="請輸入帳號"   />
+						<br><span class="usernamemsg"></span>
+					</div>
+					<div class="visible-sm col-sm-4"></div>
+					<div class="col-md-3 col-sm-8">
+						<span class="fonts15 colorbc">設置後不能修改，最多16個字符英文、數字或者兩者的組合均可</span>
+					</div>
+				</div>
+
+				<div class="row">
+					<label for="email" class="col-md-3 col-sm-4 control-label rightm992 fonts18 nofontweight">Email </label>
+					<div class="col-md-6 col-sm-8 height73">
+						<input type="text" class="form-control form-input fonts18 paddingleft20 " id="email" maxlength="50" name="email" placeholder="請輸入電子信箱" />
+						<br><span class="emailmsg"></span>
+					</div>
+					<div class="col-md-3"></div>
+				</div>
+				<div class="row">
+					<label for="passwd" class="col-md-3 col-sm-4 control-label fonts18 nofontweight">輸入密碼
+					</label>
+					<div class="col-md-6 col-sm-8 height73">
+						<input type="password" class="form-control form-input fonts18 paddingleft20 "	id="passwd" maxlength="16" name="passwd" placeholder="請輸入密碼"  />
+						<br><span class="passwdmsg"></span>
+					</div>
+					<div class="visible-sm col-sm-4"></div>
+					<div class="col-md-3 col-sm-8">
+						<span class="fonts15 colorbc"  >設置6~16個字符，包含數字和英文字母組合不能包含空格</span>
+					</div>
+				</div>
+				<div class="row">
+					<label for="passwd_confirm" class="col-md-3 col-sm-4 control-label fonts18 nofontweight">再次輸入密碼
+					</label>
+					<div class="col-md-6 col-sm-8 height73">
+						<input type="password" class="form-control form-input fonts18 paddingleft20 "	id="passwd_confirm" maxlength="16" name="passwd_confirm" placeholder="請再次輸入密碼"   />
+						<br><span class="passwd_confirmmsg"></span>
+					</div>
+					<div class="col-md-3"></div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-3 col-sm-4"></div>
+					<div class="col-md-6 col-sm-8">
+						<div class="checkbox">
+							<label class=" height50">
+								<input type="checkbox" id="checked" class="width19 height19" style="margin-top: 2px;" />
+								<span class="marginleft30" >同意接受</span>
+								<span ><a target="blank" class="fonts16 color2ba4de">ChatBot Builder&nbsp;使用條款</a></span>
+								<br>
+								<span class="checkedemsg marginleft30"></span>
+							</label>
+						</div>
+
+					</div>
+					<div class="col-md-3"></div>
+				</div>
+				<div class="row text-center">
+					<div class="margintop20"  >
+						<button type="button" class="btn btn-submit" id="account_reg">提交</button>
+					</div>
+				</div>
+			</div>
+			<!--註冊完成
+			<div class="step3">
+				<div class="form-group">
+					<div class="text-center">
+						<img src="images/success.png" class="height50"><br>
+						<br> <span class="text-uppercase">註冊成功！</span><br>
+						<br> <a href=""><button type="button" class="btn btn-submit" id="login">登入</button></a>
+					</div>
+				</div>
+			</div>
+			-->
+			<div class="height73"></div>
+
+<!-- 引入尾部頁面  
+<div class="container margintop30-768" style="padding-bottom: 55px;margin-top: 128px;">
+<div class="row hidden tipsHelpInfo">
+	<div class="col-xs-12 text-left">
+		<div class="appmanage_help mouseFinger" title="啟用與停止存在一定的延遲（不超過五分鐘），請耐心等待">
+			<img alt="" src="../resource/images/appmanage-help.png" style="height: 18px">
+			<span class="shorttext">啟用後無法使用API</span>
+		</div>
+	</div>
+</div>
+-->
+
+<div class="fonts12 color666" style="width: 100%;height: 65px;border-top: 1px solid #8093a9;margin: auto;float: right;">
+	 <div style="margin: 15px 0">
+	 	<span>Copyright&nbsp;&copy;&nbsp;2018&nbsp;ChatBot製作團隊.&nbsp; All&nbsp;rights&nbsp;reserved</span>
+	 </div>
+	 <div>
+	 	<span></span>	 	
+	 	<span></span>
+	 </div>
+</div>
+</div>
+
+</body>
+</html>
