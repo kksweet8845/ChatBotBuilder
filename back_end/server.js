@@ -20,6 +20,7 @@ app.use(express.static(path + '/WebChatBotLayout'));
 app.use(express.static(path + '/Signup'));
 app.use(express.static(path + '/Login'));
 app.use(express.static(path + '/ChatBotMainPage'));
+app.use(express.static(path + '/managerChatBot'));
 
 /*For https purpose*/
 //var https = require('https');

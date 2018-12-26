@@ -1,0 +1,71 @@
+{
+  border : 1px solid gray;
+  display: block;
+}
+
+.ui.menu {
+  background-color: #0077c8;
+}
+
+div.pusher {
+  height: 100vh;
+
+}
+
+
+.ui.menu span {
+  color: white;
+}
+
+#logo {
+  width:100%;
+  height: 100%;
+}
+
+img.ui.avatar , img.ui.avatar ~ span {
+  float: right;
+}
+
+.ui.container {
+  padding: 2.5vh 0 0 0;
+}
+
+div.new {
+    width:100%;
+    margin: 10px 2px 10px 2px;
+    height: 40px;
+}
+
+div.new button {
+  float:right;
+}
+
+.ui.relaxed.divided.list {
+  margin: 40px 15px 5px 5px;
+  padding: 2px;
+}
+
+.item {
+  margin: 2px;
+  padding:2px;
+}
+
+div.operation {
+  float:right;
+  display: block;
+}
+
+div.segment .item {
+  width:100%;
+  display: block;
+}
+
+div.modal input ,div.modal textarea{
+  max-width: 80%!important;
+
+}
+
+div.modal {
+  width: 20%!important;
+  left: 60vw!important;
+}

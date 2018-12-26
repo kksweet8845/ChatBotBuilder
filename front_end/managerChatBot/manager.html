@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Manager Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    <!--semantic ui css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css"/>
+
+    <!--Costume css -->
+    <link rel="stylesheet" href="css/manager.css">
+    <!--Costume js-->
+
+
+  </head>
+  <body>
+    <!--floolwing bar-->
+
+<div class="ui menu">
+  <div class="item">
+    <img id="logo" src="/images/logo.png">
+  </div>
+  <div class="right menu">
+    <div class="item">
+      <img class="ui avatar image" >
+      <span>Username</span>
+    </div>
+  </div>
+</div>
+
+    <!--content-->
+<div class="pusher">
+  <div class="ui container">
+    <div class="new">
+      <button class="ui  blue icon button">
+        <i class="plus square icon"></i>
+        NEW
+      </button>
+    </div>
+    <div class="ui horizontal divider header">
+      <i class="chess queen icon"></i>
+      ChatBot
+    </div>
+    <!--chat bot node-->
+    <div class="ui segments">
+      <div class="ui blue segment">
+        <div class="item">
+            <div class="content ui grid">
+              <div class="row">
+                <div class="five wide column">
+                  <i class="large github middle aligned icon"></i>
+                  <a class="header">Semantic-Org/Semantic-UI</a>
+                  <div class="description">Updated 10 mins ago</div>
+                </div>
+                <div class="eight wide column">
+                    <h3 class="ui left aligned header">
+                      some description
+                    </h3>
+                </div>
+                <div class="three wide column">
+                  <div class="ui buttons">
+                    <button class="ui button">Edit</button>
+                    <button class="ui button">Delete</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!--pop up -->
+<div class="ui mini modal">
+  <i class="close icon"></i>
+  <div class="header">
+    Chat Bot
+  </div>
+  <div class="ui form">
+      <div class="required field">
+          <label>Name</label>
+          <div class="ui input">
+            <input type="text" name="chatBotName" placeholder="Chat Bot Name">
+          </div>
+      </div>
+      <div class="field">
+        <label>Description</label>
+        <textarea id="chatBotDescription" rows="2" placeholder="Some description..."></textarea>
+      </div>
+  </div>
+  <div class="actions">
+    <div id="cancelBtn" class="ui black deny button">
+      Cancel
+    </div>
+    <div id="createBtn" class="ui positive right labeled icon button">
+      Create
+      <i class="checkmark icon"></i>
+    </div>
+  </div>
+</div>
+
+<div class="ui vertial blue footer segment">
+</div>
+
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
+<script src="js/manager.js"></script>
+
+</html>

@@ -1,7 +1,8 @@
-    { 
+  /*  {
     border: 1px gray solid;
     display: block;
-  }
+  }*/
+
   nav {
     width: 100vw;
     background-color: transparent;
@@ -9,7 +10,7 @@
     transition: background-color 1s ease;
     z-index: 100;
   }
-  
+
 
   .navbar.pink {
     background-color: rgb(217,25,99);
@@ -39,7 +40,7 @@
   }
   div.ui.container h1.ui.icon.center.header div.content {
     font-size: 80px;
-  } 
+  }
 
   img {
     width: inherit;
@@ -54,12 +55,12 @@
     content:url("/pic/member2.png");
   }
 
-  
+
   #member2 img {
     content:url("/pic/member3.png");
   }
 
-  
+
   #member3 img {
     content:url("/pic/member1.png");
   }
@@ -79,7 +80,7 @@
     padding: 2px;
   }
   div#personal {
-    height: 
+    height:
   }
   div[id^="member"] {
     transition: all 1s ease;
@@ -97,13 +98,10 @@
   #personal div[id^="member"]:hover {
     border: 6px solid #e91e63;
     box-shadow: 5px 10px 8px #ad1457;
-    
+
   }
-  
+
   .footer {
     background-color: #e91e63;
     height: 80px;
-  } 
-
-
-
+  }
