@@ -1,0 +1,109 @@
+    { 
+    border: 1px gray solid;
+    display: block;
+  }
+  nav {
+    width: 100vw;
+    background-color: transparent;
+    position: fixed!important;
+    transition: background-color 1s ease;
+    z-index: 100;
+  }
+  
+
+  .navbar.pink {
+    background-color: rgb(217,25,99);
+    transition: background-color 1s ease;
+    box-shadow: 0 0 4px #ad1457;
+  }
+
+  .homePage {
+      width: 100vw;
+      height: 100vh;
+      background-image: url(https://i.imgur.com/DPAiF1z.png);
+      background-position: center top;
+      background-size:cover;
+      filter: blur(2px);
+  }
+  .headerText {
+    position: relative;
+    bottom: 50vh;
+  }
+  .headerText h1 {
+    font-size: 150px!important;
+
+  }
+  #chatIntro {
+    position: relative;
+    bottom: 100px;
+  }
+  div.ui.container h1.ui.icon.center.header div.content {
+    font-size: 80px;
+  } 
+
+  img {
+    width: inherit;
+    max-width: 100%;
+    position: relative;
+  }
+  div {
+    overflow: hidden;
+    display: block;
+  }
+  #member1 img {
+    content:url("/pic/member2.png");
+  }
+
+  
+  #member2 img {
+    content:url("/pic/member3.png");
+  }
+
+  
+  #member3 img {
+    content:url("/pic/member1.png");
+  }
+
+
+  #member4 img {
+    content:url("/pic/member4.png");
+  }
+
+
+  #member5 img {
+    content:url("/pic/member5.png");
+  }
+
+  h1 {
+    margin: 4px;
+    padding: 2px;
+  }
+  div#personal {
+    height: 
+  }
+  div[id^="member"] {
+    transition: all 1s ease;
+    height: 500px;
+  }
+  div[class^="member_content"]{
+    height:0;
+    opacity: 0;
+    box-shadow: 5px 10px 8px #ad1457;
+    border-radius: 10px;
+    border: 5px #e91e63 solid;
+
+  }
+
+  #personal div[id^="member"]:hover {
+    border: 6px solid #e91e63;
+    box-shadow: 5px 10px 8px #ad1457;
+    
+  }
+  
+  .footer {
+    background-color: #e91e63;
+    height: 80px;
+  } 
+
+
+

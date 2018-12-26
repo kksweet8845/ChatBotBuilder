@@ -1,0 +1,3 @@
+#ignore config file
+back_end/db
+back_end/models

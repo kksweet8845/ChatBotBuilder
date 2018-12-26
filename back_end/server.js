@@ -1,6 +1,11 @@
 const express = require('express');
 var bigram = require('./algorithm/bigram');
 var formidable = require('formidable');
+var bodyParser = require('body-parser');
+var signUpAPI = require('./routes/signUp');
+var loginAPI = require('./routes/login');
+var cookieParser = require('cookie-parser');
+
 var fs = require('fs');
 const port = 11021;
 
@@ -12,21 +17,28 @@ const path = '../front_end';
 app.use(express.static(path + '/aboutUs'));
 app.use(express.static(path + '/accessFile'));
 app.use(express.static(path + '/WebChatBotLayout'));
+app.use(express.static(path + '/Signup'));
+app.use(express.static(path + '/Login'));
+app.use(express.static(path + '/ChatBotMainPage'));
 
+/*For https purpose*/
+//var https = require('https');
 
-
-var https = require('https');
-
-var options = {
+/*var options = {
     key: fs.readFileSync('/etc/letsencrypt/live/chatbot.hmkrl.com/privkey.pem'),
     cert: fs.readFileSync('/etc/letsencrypt/live/chatbot.hmkrl.com/cert.pem')
-};
+};*/
+
+/*use body-parser to parse request*/
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(cookieParser());
+
+app.use('/session/signUp',signUpAPI);
+app.use('/session',loginAPI);
 
 
-
-
-
-app.post('/ask',(req,res)=>{
+/*app.post('/ask',(req,res)=>{
   var form = new formidable.IncomingForm();
   form.parse(req,(err,fields,files)=>{
     var question = fields['userQ'];
@@ -36,7 +48,8 @@ app.post('/ask',(req,res)=>{
       res.send(obj.conversations[max_index].A);
     });
   });
-});
+});*/
+/*
 app.post('/testQuest',(req,res)=>{
       var form = new formidable.IncomingForm();
       form.parse(req,(err,fields,files)=>{
@@ -47,8 +60,9 @@ app.post('/testQuest',(req,res)=>{
           res.send(obj.conversations[max_index].A);
         });
       });
-});
-app.post('/server',(req,res)=>{
+});*/
+//upload data schema
+/*app.post('/server',(req,res)=>{
       var form = new formidable.IncomingForm();
       form.uploadDir = __dirname;
       form.parse(req,(err,fields,files)=>{
@@ -70,15 +84,14 @@ app.post('/server',(req,res)=>{
           });
         });
       });
-});
-//app express
-/*app.listen(port,() => {
-  console.log('Listening on port:',port);
 });*/
+//app express
+app.listen(port,() => {
+  console.log('Listening on port:',port);
+});
 
 
-
+/*
 https.createServer(options, app).listen(port, function () {
     console.log('Https server listening on port ' + port);
-});
-
+});*/

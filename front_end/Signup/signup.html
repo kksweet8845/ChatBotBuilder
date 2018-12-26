@@ -12,7 +12,7 @@
 <title>ChatBot Builder</title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/jquery-ui.min.css" rel="stylesheet">
-<link href="css/notosanstc.css" rel="stylesheet"> 
+<link href="css/notosanstc.css" rel="stylesheet">
 <link href="css/reset.css" rel="stylesheet">
 <link href="css/notosanstc.css" rel="stylesheet">
 <link href="css/common.css" rel="stylesheet">
@@ -91,7 +91,7 @@ input:-ms-input-placeholder {
 			check_input($("#passwd_confirm"),$(".passwd_confirmmsg"), optionPasswd_confirm);
 		});
 
-		
+
 		$("#deveBtn").on("click", function() {
 			//彈出框
 			$("#agreementDialog").dialog({
@@ -105,12 +105,12 @@ input:-ms-input-placeholder {
 				}
 			});
 		});
-		
+
 		$(".agreesub").on("click", function() {
 			$("#agreementDialog").dialog("close");
 		});
 
-		
+
 		$("#account_reg").on("click", function() {
 			if ($("#checked")[0].checked == false) {
 				$(".checkedemsg").html('請同意 ChatBot使用條款');
@@ -122,17 +122,17 @@ input:-ms-input-placeholder {
 					&& check_input($("#email"),$(".emailmsg"), optionEmail)
 					&& check_input($("#passwd"),$(".passwdmsg"), optionPasswd)
 					&& check_input($("#passwd_confirm"),$(".passwd_confirmmsg"), optionPasswd_confirm)
-					&& check_input($("#reg_vcode"),$(".reg_vcodemsg"), optionReg_vcode)){
+				/*&& check_input($("#reg_vcode"),$(".reg_vcodemsg"), optionReg_vcode)*/){
 
 				passwd = $.md5($.md5($("#sub").find("#passwd").val())+ "QdIZK4Pmmwgu7KTj");
 				passwd_confirm = $.md5($.md5($("#sub").find("#passwd_confirm").val())+ "QdIZK4Pmmwgu7KTj");
-				$.post("register_account_do",
+				$.post("/session/signUp",
 						{
 					username:$("#sub").find("#username").val(),
 					email:$("#sub").find("#email").val(),
 					passwd:passwd,
 					passwd_confirm:passwd_confirm,
-					vcode:$("#sub").find("#reg_vcode").val()
+					//vcode:$("#sub").find("#reg_vcode").val()
 						},
 					function(data){
 						if (data.type == "vcode") {
@@ -176,16 +176,16 @@ input:-ms-input-placeholder {
 				</li>
 				<li>
 					<a target="_blank">GitHub</a>
-				</li>				
+				</li>
 			</ul>
-						
-			<ul class="nav navbar-nav navbar-right">		  		
+
+			<ul class="nav navbar-nav navbar-right">
 			  		<li>
-						<a href="" class="user-btn login">登入</a>
+						<a href="login.html" class="user-btn login">登入</a>
 					</li>
 					<li>
-						<a href="" class="user-btn reg">註冊</a>
-					</li>				
+						<a href="signup.html" class="user-btn reg">註冊</a>
+					</li>
 			</ul>
 
 		</div>
@@ -304,7 +304,7 @@ input:-ms-input-placeholder {
 			-->
 			<div class="height73"></div>
 
-<!-- 引入尾部頁面  
+<!-- 引入尾部頁面
 <div class="container margintop30-768" style="padding-bottom: 55px;margin-top: 128px;">
 <div class="row hidden tipsHelpInfo">
 	<div class="col-xs-12 text-left">
@@ -321,7 +321,7 @@ input:-ms-input-placeholder {
 	 	<span>Copyright&nbsp;&copy;&nbsp;2018&nbsp;ChatBot製作團隊.&nbsp; All&nbsp;rights&nbsp;reserved</span>
 	 </div>
 	 <div>
-	 	<span></span>	 	
+	 	<span></span>
 	 	<span></span>
 	 </div>
 </div>

@@ -41,8 +41,8 @@ var bigram = {
     var obj = {
       conversations:[],
       biSets:[]
-    };    
-    var unit = {Q:'',A:''};    
+    };
+    var unit = {Q:'',A:''};
       //console.log('begin txtToJson');
        const rl = readline.createInterface({
         input: fs.createReadStream(path),
@@ -97,17 +97,16 @@ var bigram = {
           }
         }
         if(max_index == -1){
-          var err = '我不懂你在說什麼?'; 
+          var err = '我不懂你在說什麼?';
         }
         callback(err,max_index);
     });
   }
 
 
-  
+
 }
 
 
 
 module.exports = bigram;
-
