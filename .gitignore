@@ -1,3 +1,2 @@
 #ignore config file
-back_end/db
-back_end/models
+back_end/db/config.js
