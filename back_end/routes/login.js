@@ -6,20 +6,43 @@ var loginAPI = express.Router();
 var {mongoose} = require('../db/mongoose');
 var {ChatBot} = require('../models/chatBot');
 var {User} = require('./../models/user');
-
-
-var sessionIDsTable = [];
+var sessionIDsTable = require('./sessionTable');
 
 var sessionAccount = {
   path: "/login",
   sessionId: "",
-
-
 }
 //
 loginAPI.get('/login',(req,res)=>{
 
 
+});
+
+loginAPI.post('/check',(req,res)=>{
+  console.log('Checking');
+  sessionIDsTable.forEach( (account)=>{
+      if(account.sessionId == req.body.sessionId && account.userId == req.body.username){
+        User.find({
+          userId: req.body.username,
+        },(err,data)=>{
+          if(err) {
+            console.log(err);
+            res.status(400).send("Not login or Not sign up yet");
+            return;
+          }
+          //console.log(data);
+          if(data.length != 0){
+            //console.log(`${data[0].userId}: `,data);
+            var result = {
+              content: data[0],
+              sign: "signed"
+            }
+            res.send(result);
+
+          }
+        });
+      }
+  });
 });
 
 loginAPI.post('/login',(req,res)=>{
@@ -43,14 +66,10 @@ loginAPI.post('/login',(req,res)=>{
           const SA = new SessionAccount("/",sessionId,data[0].userId,data[0].password,600000);
           sessionIDsTable.push(SA);
           console.log(sessionIDsTable);
-          //res.setHeader('Set-Cookie',['user=nober','Your=loser','signed=1']);
-          //res.redirect('/index.html');
 
-          //res.writeHead(200,{'Content-Type':'text/plain'});
-          res.cookie('id_token',sessionId);
-          res.redirect(302,'/index.html');
-          //res.send();
-          //return res.redirect('/index.html');
+          res.cookie('sessionId',sessionId );
+          res.cookie('Path' , data[0].userId);
+          res.redirect(302,'/manager.html');
         }
         else{
           res.status(400).send("No match data");

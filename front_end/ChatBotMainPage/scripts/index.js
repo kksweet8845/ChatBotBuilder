@@ -6,7 +6,7 @@ $(document).ready(function () {
 	});	
 	
 	$(".BTN_SIGNUP").click(function() {
-		var new_url = "sign_up.html";
+		var new_url = "signup.html";
 		window.location = (new_url);
 	});
 })

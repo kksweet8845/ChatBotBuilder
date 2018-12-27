@@ -126,7 +126,7 @@ input:-ms-input-placeholder {
 
 				passwd = $.md5($.md5($("#sub").find("#passwd").val())+ "QdIZK4Pmmwgu7KTj");
 				passwd_confirm = $.md5($.md5($("#sub").find("#passwd_confirm").val())+ "QdIZK4Pmmwgu7KTj");
-				$.post("/session/signUp",
+				/*$.post("/session/signUp",
 						{
 					username:$("#sub").find("#username").val(),
 					email:$("#sub").find("#email").val(),
@@ -135,18 +135,25 @@ input:-ms-input-placeholder {
 					//vcode:$("#sub").find("#reg_vcode").val()
 						},
 					function(data){
-						if (data.type == "vcode") {
-							$(".reg_vcodemsg").html(data.msg);
-						} else if (data.status == "ok") {
-							$(".progress-bar_step2").removeClass("hidden");
-							$(".step1").hide();
-							$(".step2").show();
-						} else {
-							/* alert(data.msg); */
-							$(".regfailmsg").html(data.msg);
-						}
+						console.log(data);
+						console.log(data.status);
+						//window.location = "/session/signup";
+					});*/
+				$.ajax({
+					type: "POST",
+					url: "session/signUp",
+					data: {
+						username:$("#sub").find("#username").val(),
+						email:$("#sub").find("#email").val(),
+						passwd:passwd,
+						passwd_confirm:passwd_confirm,
 					},
-					"json");
+					statusCode: {
+							200: ()=> { window.location = "/session/signUp/signed";},
+							400: ()=> { alert("The account is existed");}
+					}
+				});
+
 			}
 
 		});

@@ -2,9 +2,11 @@ const express = require('express');
 var bigram = require('./algorithm/bigram');
 var formidable = require('formidable');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+
 var signUpAPI = require('./routes/signUp');
 var loginAPI = require('./routes/login');
-var cookieParser = require('cookie-parser');
+var chatBotOpAPI = require('./routes/chatBotManager');
 
 var fs = require('fs');
 const port = 11021;
@@ -37,6 +39,7 @@ app.use(cookieParser());
 
 app.use('/session/signUp',signUpAPI);
 app.use('/session',loginAPI);
+app.use('/chatBot',chatBotOpAPI);
 
 
 /*app.post('/ask',(req,res)=>{
