@@ -25,12 +25,12 @@ app.use(express.static(path + '/ChatBotMainPage'));
 app.use(express.static(path + '/managerChatBot'));
 
 /*For https purpose*/
-//var https = require('https');
+var https = require('https');
 
-/*var options = {
+var options = {
     key: fs.readFileSync('/etc/letsencrypt/live/chatbot.hmkrl.com/privkey.pem'),
     cert: fs.readFileSync('/etc/letsencrypt/live/chatbot.hmkrl.com/cert.pem')
-};*/
+};
 
 /*use body-parser to parse request*/
 app.use(bodyParser.json());
@@ -90,12 +90,12 @@ app.post('/testQuest',(req,res)=>{
       });
 });*/
 //app express
-app.listen(port,() => {
+/*app.listen(port,() => {
   console.log('Listening on port:',port);
-});
+});*/
 
 
-/*
+
 https.createServer(options, app).listen(port, function () {
     console.log('Https server listening on port ' + port);
-});*/
+});
