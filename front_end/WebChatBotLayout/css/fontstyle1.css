@@ -1,21 +1,21 @@
 .bubble1{
-	font-family:DFKai-sb;
+	font-family:DFKai-sb !important;
 }
 
 .bubble2 {
-  font-family:PMINGLiU;
+  font-family:PMINGLiU !important;
 }
 
 
 
 .bubble3 {
-  font-family:Microsoft JhengHei;
+  font-family:Microsoft JhengHei !important;
 }
 
 .bubble4 {
-  font-weight:normal;
+  font-weight:normal !important;
 }
 
 .bubble5 {
-  font-weight:bold;
+  font-weight:bold !important;
 }

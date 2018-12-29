@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chatbot Generator</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet">
+<!-- CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css"/>
+<link rel="stylesheet" href="css/index.css">
+<link id="bubblestyle" rel="stylesheet" href="css/bubblestyle1.css">
+<link id="bubblestyle" rel="stylesheet" href="css/ChatUI.css">
+<!--<link id="bubblestyleleft" rel="stylesheet" href="css/bubblestyle(left).css">-->
+<link id="bubblestyle" rel="stylesheet" href="css/fontstyle1.css">
+<link id="bubblestyle" rel="stylesheet" href="css/iframe.css">
+
+
+<!-- Scripts -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bubble.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="js/background.js"></script>
+<script src="js/fontsize.js"></script>
+<script src="js/fontstyle.js"></script>
+<script src="js/setting.js"></script>
+</head>
+
+<body>
+<div style="background-color:#f8f9fa; height:100%;">
+<!-- Top NavBar -->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top justify-content-end"> <a class="navbar-brand ml-5" href="index.html" >Chatbot</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar"> <span class="navbar-toggler-icon"></span> </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav mr-auto">
+    </ul>
+    <ul class="navbar-nav">
+      <li class="nav-item"> <a class="nav-link btn" data-toggle="modal" data-target="#modal_about_us"></a> </li>
+    </ul>
+  </div>
+</nav>
+<!-- Container -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col container-chat">
+      <div class="row">
+        <div class="col chat_window bg-light">
+          <div class="display_section" style="height:78vh; font-size:16px;" id = "window"> 
+                  <!--content-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Ask-->
+  <div class="input-group mt-3">
+    <input type="text" class="form-control input_section" placeholder="Ask question here!" aria-label="Ask question here!" aria-describedby="btn_ask" id = "userQuestion">
+      <div class="input-group-append">
+         <button class="btn btn-primary btn-size-small" type="submit" id="btn_ask">Ask</button>
+      </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

@@ -31,7 +31,7 @@ $(document).ready(function() {
             item2 += '    <div class="avatar">';
             item2 += '      <img src="https://i.imgur.com/6oTWGHZ.png"/>';
             item2 += '    </div><!-- 內容 -->';
-            item2 += '    <div class="content left"><!-- 傳訊者 -->';
+            item2 += '    <div class="content"><!-- 傳訊者 -->';
             item2 += '      <div class="author">ChatBot';
             item2 += '      </div><!-- 文字 -->';
             item2 += '      <div class="text">';

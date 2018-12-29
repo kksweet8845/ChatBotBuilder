@@ -1,11 +1,14 @@
 $(document).ready(function() {  
-    $('#btn_ask').click(()=>{
-      $.post('ask',{
-        userQ: $('#userQuestion').val()
-      },(data)=>{
-        var date = new Date();
-        var input = $('#userQuestion').val();
-        var item = '<div class="cu chat" data-style="telegram">';
+    $("#btn_ask").click(function(event) {
+        event.preventDefault(); 
+        $.ajax({
+            method:"GET",
+            url: "https://randomuser.me/api/"
+        })
+        .done(function(msg){
+          var date = new Date();
+          var input = $('#userQuestion').val(); //get fname(input)
+          var item = '<div class="cu chat" data-style="telegram">';
             item += '  <div class="message text right">';
             item += '    <div class="avatar">';
             item += '      <img src="https://i.imgur.com/6oTWGHZ.png"/>';
@@ -21,17 +24,20 @@ $(document).ready(function() {
             item += '      </div>';
             item += '    </div>';
             item += '  </div>';
-            item += '</div>';
-        $('#window').append(item);
-        $('#userQuestion').val('');
-        var reply = data;
+            item += '</div>';    
+          console.log(item);
+          $('#window').append(item); //append user's bubble
 
-        var item2 = '<div class="cu chat" data-style="telegram">';
+
+          var data = "Hello Hello Hello";
+          var reply = data;
+          date = new Date();
+          var item2 = '<div class="cu chat" data-style="telegram">';
             item2 += '  <div class="message text">';
             item2 += '    <div class="avatar">';
             item2 += '      <img src="https://i.imgur.com/6oTWGHZ.png"/>';
             item2 += '    </div><!-- 內容 -->';
-            item2 += '    <div class="content left"><!-- 傳訊者 -->';
+            item2 += '    <div class="content"><!-- 傳訊者 -->';
             item2 += '      <div class="author">ChatBot';
             item2 += '      </div><!-- 文字 -->';
             item2 += '      <div class="text">';
@@ -42,24 +48,15 @@ $(document).ready(function() {
             item2 += '      </div>';
             item2 += '    </div>';
             item2 += '  </div>';
-            item2 += '</div>';
+            item2 += '</div>'; 
+          console.log(item2);
+          $('#window').append(item2); //append chatbot's bubble
 
-        $('#window').append(item2);
+          var div = document.getElementById('window');  
+          div.scrollTop = div.scrollHeight; //auto scroll to bottom
 
-        var div = document.getElementById('window');
-        div.scrollTop = div.scrollHeight;
+
+
       });
     });
-
-
-    var form = document.forms.namedItem("fileInfo");
-    $('#submt').click((event)=>{
-      event.preventDefault();
-
-      var oData = new FormData(form);
-      var oReq = new XMLHttpRequest();
-      oReq.open('POST','/server',true);
-      oReq.send(oData);
-    });
-    
-}); 
+});

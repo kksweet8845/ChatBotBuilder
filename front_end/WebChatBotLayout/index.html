@@ -12,11 +12,27 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css"/>
 <link rel="stylesheet" href="css/index.css">
-<link id="bubblestyle" rel="stylesheet" href="css/bubblestyle1.css">
-<link id="bubblestyleleft" rel="stylesheet" href="css/bubblestyle(left).css">
+<link rel="stylesheet" href="css/ChatUI.css">
+<link rel="stylesheet" href="css/fontstyle1.css">
+<link rel="stylesheet" href="css/fontcolor.css">
+<link id="Lbubblecolor" rel="stylesheet" href="">
+<link id="Rbubblecolor" rel="stylesheet" href="">
 
 <!-- Scripts -->
-
+<script src="js/jquery.min.js"></script>
+<script src="js/generate.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="js/background.js"></script>
+<script src="js/fontsize.js"></script>
+<script src="js/fontstyle.js"></script>
+<script src="js/fontcolor.js"></script>
+<!--<script src="js/b.js"></script>bubbletest-->
+<script src="js/Lbubblecolor.js"></script>
+<script src="js/Rbubblecolor.js"></script>
+<script src="js/bubble.js"></script>
+<script src="js/setting.js"></script>
 </head>
 
 <body>
@@ -83,7 +99,8 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropup"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_bubble" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bubble</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown_bubble">
-          <button class="dropdown-item" data-toggle="modal" data-target="#modal_bubble_color">Bubble Color</button>
+          <button class="dropdown-item" data-toggle="modal" data-target="#modal_Rbubble_color">Right Bubble Color</button>
+          <button class="dropdown-item" data-toggle="modal" data-target="#modal_Lbubble_color">Left Bubble Color</button>
           <button class="dropdown-item" data-toggle="modal" data-target="#modal_bubble_style">Bubble Style</button>
         </div>
       </li>
@@ -104,28 +121,52 @@
     <ul class="navbar-nav">
       <div class="row">
         <button class="btn btn-light btn-size-small mr-2 ml-2" data-toggle="modal" data-target="#modal_upload">Upload</button>
-        <button class="btn btn-light btn-size-small mr-2 ml-2">Generate</button>
+        <button class="btn btn-light btn-size-small mr-2 ml-2" id="btn_gen">Generate</button>
         <button class="btn btn-light btn-size-small mr-2">Save</button>
       </div>
     </ul>
   </div>
 </nav>
-<div class="modal fade" id="modal_bubble_color" tabindex="-1" role="dialog" aria-labelledby="label_bubble_color" aria-hidden="true">
+<div class="modal fade" id="modal_Lbubble_color" tabindex="-1" role="dialog" aria-labelledby="label_bubble_color" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="label_bubble_color">Edit Bubble Color</h5>
+        <h5 class="modal-title" id="label_bubble_color">Edit Left Bubble Color</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
       </div>
       <div class="modal-body">
-        <button class="btn btn-color mt-1 btn-0" id="bubble_red"></button>
-        <button class="btn btn-color mt-1 btn-1" id="bubble_org"></button>
-        <button class="btn btn-color mt-1 btn-2" id="bubble_yel"></button>
-        <button class="btn btn-color mt-1 btn-3" id="bubble_gre"></button>
-        <button class="btn btn-color mt-1 btn-4" id="bubble_blu"></button>
-        <button class="btn btn-color mt-1 btn-5" id="bubble_whi">WHITE</button>
-        <button class="btn btn-color mt-1 btn-6" id="bubble_blk"></button>
-        <button class="btn btn-color mt-1 btn-7" id="bubble_gry"></button>
+        <button class="btn btn-color mt-1 btn-0" id="Lbubble_red"></button>
+        <button class="btn btn-color mt-1 btn-1" id="Lbubble_org"></button>
+        <button class="btn btn-color mt-1 btn-2" id="Lbubble_yel"></button>
+        <button class="btn btn-color mt-1 btn-3" id="Lbubble_gre"></button>
+        <button class="btn btn-color mt-1 btn-4" id="Lbubble_blu"></button>
+        <button class="btn btn-color mt-1 btn-5" id="Lbubble_whi">WHITE</button>
+        <button class="btn btn-color mt-1 btn-6" id="Lbubble_blk"></button>
+        <button class="btn btn-color mt-1 btn-7" id="Lbubble_gry"></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modal_Rbubble_color" tabindex="-1" role="dialog" aria-labelledby="label_bubble_color" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="label_bubble_color">Edit Right Bubble Color</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+      </div>
+      <div class="modal-body">
+        <button class="btn btn-color mt-1 btn-0" id="Rbubble_red"></button>
+        <button class="btn btn-color mt-1 btn-1" id="Rbubble_org"></button>
+        <button class="btn btn-color mt-1 btn-2" id="Rbubble_yel"></button>
+        <button class="btn btn-color mt-1 btn-3" id="Rbubble_gre"></button>
+        <button class="btn btn-color mt-1 btn-4" id="Rbubble_blu"></button>
+        <button class="btn btn-color mt-1 btn-5" id="Rbubble_whi">WHITE</button>
+        <button class="btn btn-color mt-1 btn-6" id="Rbubble_blk"></button>
+        <button class="btn btn-color mt-1 btn-7" id="Rbubble_gry"></button>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -196,11 +237,11 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
       </div>
       <div class="modal-body">
-        <button class="btn btn-lg mt-1 btn-light" id="font_a" onclick="ChangeFontStyle1()" style="font-family:DFKai-sb !important">標楷體</button>
-        <button class="btn btn-lg mt-1 btn-light" id="font_b" onclick="ChangeFontStyle2()" style="font-family:PMingLiU !important">新細明體</button>
-        <button class="btn btn-lg mt-1 btn-light" id="font_c" onclick="ChangeFontStyle3()" style="font-family:Microsoft JhengHei !important">微軟正黑體</button>
-        <button class="btn btn-lg mt-1 btn-light" id="font_d" onclick="ChangeFontStyle4()" style="font-weight:normal !important">細體</button>
-        <button class="btn btn-lg mt-1 btn-light" id="font_e" onclick="ChangeFontStyle5()" style="font-weight:bold !important">粗體</button>
+        <button class="btn btn-lg mt-1 btn-light" id="font_a" style="font-family:DFKai-sb !important">標楷體</button>
+        <button class="btn btn-lg mt-1 btn-light" id="font_b" style="font-family:PMingLiU !important">新細明體</button>
+        <button class="btn btn-lg mt-1 btn-light" id="font_c" style="font-family:Microsoft JhengHei !important">微軟正黑體</button>
+        <button class="btn btn-lg mt-1 btn-light" id="font_d" style="font-weight:normal !important">細體</button>
+        <button class="btn btn-lg mt-1 btn-light" id="font_e" style="font-weight:bold !important">粗體</button>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -291,15 +332,5 @@
   </div>
 </div>
 
-<!-- Scripts -->
-<script src="js/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="js/background.js"></script>
-<script src="js/fontsize.js"></script>
-<script src="js/fontstyle.js"></script>
-<script src="js/bubble.js"></script>
-<script src="js/setting.js"></script>
 </body>
 </html>
