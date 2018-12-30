@@ -22,7 +22,7 @@ $(document).ready(function() {
             item += '       <p>' + input + '</p>';
             item += '      </div><!-- 中繼資料 -->';
             item += '      <div class="meta">';
-            item += '        <div class="item">'+ date.getHours() +':'+ date.getMinutes()+'</div>';
+            item += '        <div class="item">'+ hr +':'+ min +'</div>';
             item += '      </div>';
             item += '    </div>';
             item += '  </div>';
@@ -43,7 +43,7 @@ $(document).ready(function() {
             item2 += '       <p>' + data + '</p>';
             item2 += '      </div><!-- 中繼資料 -->';
             item2 += '      <div class="meta">';
-            item2 += '        <div class="item">'+ date.getHours() +':'+ date.getMinutes() +'</div>';
+            item2 += '        <div class="item">'+ hr +':'+ min +'</div>';
             item2 += '      </div>';
             item2 += '    </div>';
             item2 += '  </div>';
