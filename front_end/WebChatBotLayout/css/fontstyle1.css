@@ -1,22 +1,3 @@
-<<<<<<< HEAD
-.font1{
-	font-family:DFKai-sb;
-}
-
-.font2 {
-  font-family:PMINGLiU;
-}
-.font3 {
-  font-family:Microsoft JhengHei;
-}
-
-.font4 {
-  font-weight:normal;
-}
-
-.font5 {
-  font-weight:bold;
-=======
 .bubble1{
 	font-family:DFKai-sb !important;
 }
@@ -37,5 +18,4 @@
 
 .bubble5 {
   font-weight:bold !important;
->>>>>>> d9bfc247fcbe665cf31136f6ee8730d71dd3223d
 }
