@@ -1,0 +1,143 @@
+/*background-color*/ /*add to bubble's content or display_section*/
+.lightblue{
+	background-color:#53A0DB !important;
+}
+
+.orange{
+	background-color:#F6D389 !important;
+}
+
+.yellow{
+	background-color:#F6F889 !important;
+}
+
+.green{
+	background-color:#C4F889 !important;
+}
+
+.blue{
+	background-color:#C4F8D6 !important;
+}
+
+.white{
+	background-color:white !important;
+}
+
+.black{
+	background-color:black !important;
+}
+
+.grey{
+	background-color:#E2E2E2 !important;
+}
+
+
+
+/*font-color*/ /*add on display_section*/
+.fontlightblue{
+	color:#53A0DB !important;
+}
+
+.fontorange{
+	color:#F6D389 !important;
+}
+
+.fontyellow{
+	color:#F6F889 !important;
+}
+
+.fontgreen{
+	color:#C4F889 !important;
+}
+
+.fontblue{
+	color:#C4F8D6 !important;
+}
+
+.fontwhite{
+	color:white !important;
+}
+
+.fontblack{
+	color:black !important;
+}
+
+.fontgrey{
+	color:#E2E2E2 !important;
+}
+
+
+
+/*font-size*/ /*add on display_section*/
+.font16{
+	font-size:16px !important;
+}
+
+.font18{
+	font-size:18px !important;
+}
+
+.font20{
+	font-size:20px !important;
+}
+
+.font22{
+	font-size:22px !important;
+}
+
+.font24{
+	font-size:24px !important;
+}
+
+.font26{
+	font-size:26px !important;
+}
+
+.font28{
+	font-size:28px !important;
+}
+
+.font30{
+	font-size:30px !important;
+}
+
+.font32{
+	font-size:32px !important;
+}
+
+.font34{
+	font-size:34px !important;
+}
+
+.font36{
+	font-size:36px !important;
+}
+
+.font38{
+	font-size:38px !important;
+}
+
+.font40{
+	font-size:40px !important;
+}
+
+/*fontstyle*/ /*add on display_section*/
+.fontstyle1{
+	font-family:DFKai-sb !important;
+}
+
+.fontstyle2{
+	font-family:PMingLiU !important;
+}
+
+.fontstyle3{
+	font-family:Microsoft JhengHei !important;
+}
+
+.fontstyle4{
+	font-weight:normal !important;
+}
+
+.fontstyle5{
+	font-weight:bold !important;
+}

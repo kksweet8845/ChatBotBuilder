@@ -1,0 +1,37 @@
+/*Bubble css (system)*/
+.arrow_box1 {
+	position: relative;
+	background: #31fc31;
+	border: 4px solid #8dfc8d;
+	width: 15vw;
+	margin-top:20px;
+    margin-bottom:20px;
+    margin-left: 4vw;
+    clear:both;
+}
+.arrow_box1:after, .arrow_box1:before {
+	right: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.arrow_box1:after {
+	border-color: rgba(28, 40, 213, 0);
+	border-right-color: #31fc31;
+	border-width: 30px;
+	margin-top: -30px;
+}
+.arrow_box1:before {
+	border-color: rgba(194, 225, 245, 0);
+	border-right-color: #8dfc8d;
+	border-width: 36px;
+	margin-top: -36px;
+}
+.arrow_box1 h1{
+    word-break: break-all;
+}
