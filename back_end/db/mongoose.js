@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-const config = require('./config.nober');
+const config = require('./config.chatBot');
 mongoose.Promise = global.Promise;
 mongoose.connect(`mongodb://${config.mongodb.user}:${config.mongodb.password}@${config.mongodb.host}/${config.mongodb.database}`,{
   useNewUrlParser: true
