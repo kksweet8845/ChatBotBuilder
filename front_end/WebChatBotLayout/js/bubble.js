@@ -4,6 +4,11 @@ $(document).ready(function() {
         userQ: $('#userQuestion').val()
       },(data)=>{
         var date = new Date();
+        var hr;
+        var min;
+        if(date.getHours()<10) hr = '0' + date.getHours(); else hr = date.getHours();
+        if(date.getMinutes()<10) min = '0' + date.getMinutes(); else min = date.getMinutes(); 
+
         var input = $('#userQuestion').val();
         var item = '<div class="cu chat" data-style="telegram">';
             item += '  <div class="message text right">';
