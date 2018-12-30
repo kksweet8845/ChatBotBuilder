@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var {chatBotDialogueSchema} = require('./chatBotDialogue');
 
 var chatBotSchema = new mongoose.Schema({
   token: {
@@ -18,23 +17,24 @@ var chatBotSchema = new mongoose.Schema({
     trim: true
   },
   font:{
-    style: { type: String , trime: true},
-    color: { type: String , trime: true}
+    style: { type: String , trime: true , default: ""},
+    color: { type: String , trime: true , default: "black"}
   },
   bubble: {
-    style: { type: String , trime: true},
-    color: { type: String , trime: true}
+    style: { type: String , trime: true , default: "normal"},
+    color: { type: String , trime: true , default: "0"}
   },
   background: {
-    style: { type: String , trime: true},
-    color: { type: String , trime: true}
+    style: { type: String , trime: true , default: "none"},
+    color: { type: String , trime: true , default: "white"}
   },
   image: {
     type: String,
     default: "/"
-  },
-  chatDialogues: [chatBotDialogueSchema]
-})
+  }
+});
+
+
 
 var ChatBot = mongoose.model('ChatBot',chatBotSchema);
 module.exports = {

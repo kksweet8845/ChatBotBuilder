@@ -3,11 +3,12 @@ var bigram = require('./algorithm/bigram');
 var formidable = require('formidable');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+const hbs = require('hbs');
 
 var signUpAPI = require('./routes/signUp');
 var loginAPI = require('./routes/login');
 var chatBotOpAPI = require('./routes/chatBotManager');
-
+var hbsManagerAPI = require('./routes/hbsManager');
 var fs = require('fs');
 const port = 11021;
 
@@ -23,6 +24,10 @@ app.use(express.static(path + '/Signup'));
 app.use(express.static(path + '/Login'));
 app.use(express.static(path + '/ChatBotMainPage'));
 app.use(express.static(path + '/managerChatBot'));
+
+hbs.registerPartials(__dirname + '/views/partials');
+app.set('view engine','hbs');
+
 
 /*For https purpose*/
 //var https = require('https');
@@ -40,7 +45,7 @@ app.use(cookieParser());
 app.use('/session/signUp',signUpAPI);
 app.use('/session',loginAPI);
 app.use('/chatBot',chatBotOpAPI);
-
+app.use('/hbs',hbsManagerAPI);
 
 /*app.post('/ask',(req,res)=>{
   var form = new formidable.IncomingForm();

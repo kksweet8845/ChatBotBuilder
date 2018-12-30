@@ -1,4 +1,4 @@
-const bigram = require('./bigram_mongo');
+const bigram = require('./bigram');
 const fs = require('fs');
 
 //var bigramObj = JSON.parse(bigram.txtToJson(fs.readFileSync('./qa','utf8')));

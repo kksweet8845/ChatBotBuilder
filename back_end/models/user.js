@@ -25,6 +25,8 @@ var userSchema = new mongoose.Schema({
     chatBots: [chatBotSchema]
 });
 
+
+
 var User = mongoose.model('User',userSchema);
 
 module.exports={

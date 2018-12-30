@@ -44,6 +44,9 @@ $(document).ready(()=>{
           },
           error: (err)=>{
               console.log(err);
+              if(err.status == "400"){
+                window.location = "login.html";
+              }
           }
       });
 

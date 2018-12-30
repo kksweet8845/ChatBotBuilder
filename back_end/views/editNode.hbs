@@ -1,0 +1,66 @@
+<div class="ui red segment" id="{{nodeUid}}">
+   <div class="ui grid" id="nodeHeader">
+     <div class="twelve wide column">
+      <h3 class="ui header input form">
+        <input id="nameText" type="text" placeholder="Input your dialogue name" value="{{dialogueName}}">
+      </h3>
+      <button class="ui icon button" id="dialogue-edit"><i class="edit icon"></i></button>
+     </div>
+     <div class="four wide column">
+        <i class="large green thumbs up icon" id="icon-save"></i>
+        <i class="large red save icon" id="icon-unsave"></i>
+        <a class="ui label" id="collapse">Collapse</a>
+        <a class="ui label" id="expand">Expand</a>
+     </div>
+   </div>
+   <div class="ui hidden divider"></div>
+   <div class="ui form">
+     <div class="field">
+       <h3 class="ui header">Question</h3>
+       <textarea rows="1" id="queText" >{{Qcontext}}</textarea>
+       <a class="ui pointing red basic label">
+          <p id="que-warning"></p>
+       </a>
+     </div>
+     <div class="field">
+       <h3 class="ui header">Answer</h3>
+       <textarea rows="5" id="ansText">{{Acontext}}</textarea>
+       <a class="ui pointing red basic label">
+          <p id="ans-warning"></p>
+       </a>
+     </div>
+   </div>
+   <h3 class="ui horizontal divider header">Child Question</h3>
+   <div class="ui icon fluid input" id="chInput">
+     <input type="text" placeholder="Input your descriptive here" id="chText">
+     <div class="ui labeled button" tabindex="0">
+        <button class="ui red button" id="plusCh" disabled>
+          <i class="plus icon"></i> New
+        </button>
+        <a class="ui basic red left pointing label">
+           {{childNum}}
+        </a>
+      </div>
+     <a class="ui left pointing red basic label">
+        <p id="ch-warning">Please not input special &lt; or &gt; character</p>
+      </a>
+   </div>
+   <div class="ui divided selection list" id="questionFlowDisplay">
+     {{#each flowIndex}}
+        {{>questionFlow}}
+     {{/each}}
+   </div>
+   <h3 class="ui horizontal divider header"><i class="image icon"></i>  Image</h3>
+   <div class="ui input">
+     <input type="file" name="myFile">
+     <div id="fileDisplayArea"></div>
+   </div>
+   <div class="ui divider"></div>
+   <div class="ui center aligned segment">
+    <div class="ui buttons" id="saveBtn">
+        <button class="ui button">Cancel</button>
+        <div class="or"></div>
+        <button class="ui positive button" value="true">Save</button>
+      </div>
+   </div>
+</div>

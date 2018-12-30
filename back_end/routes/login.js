@@ -8,11 +8,7 @@ var {ChatBot} = require('../models/chatBot');
 var {User} = require('./../models/user');
 var sessionIDsTable = require('./sessionTable');
 
-var sessionAccount = {
-  path: "/login",
-  sessionId: "",
-}
-//
+
 loginAPI.get('/login',(req,res)=>{
 
 
@@ -20,7 +16,11 @@ loginAPI.get('/login',(req,res)=>{
 
 loginAPI.post('/check',(req,res)=>{
   console.log('Checking');
-  sessionIDsTable.forEach( (account)=>{
+  if(sessionIDsTable.length == 0){
+    res.status(400).send();
+  }
+  sessionIDsTable.forEach((account)=>{
+    //console.log(account);
       if(account.sessionId == req.body.sessionId && account.userId == req.body.username){
         User.find({
           userId: req.body.username,
@@ -41,6 +41,8 @@ loginAPI.post('/check',(req,res)=>{
 
           }
         });
+      }else {
+        res.send();
       }
   });
 });
@@ -49,7 +51,7 @@ loginAPI.post('/login',(req,res)=>{
     var name = 'guest';
 
     const passwd = md5(md5(req.body.passwd)+"QdIZK4Pmmwgu7KTj");
-    console.log(req.cookies);
+    //console.log(req.cookies);
     User.find({
         userId: req.body.username,
         password: passwd
@@ -65,7 +67,7 @@ loginAPI.post('/login',(req,res)=>{
           const sessionId = uid.sync(24);
           const SA = new SessionAccount("/",sessionId,data[0].userId,data[0].password,600000);
           sessionIDsTable.push(SA);
-          console.log(sessionIDsTable);
+          //console.log(sessionIDsTable);
 
           res.cookie('sessionId',sessionId );
           res.cookie('Path' , data[0].userId);

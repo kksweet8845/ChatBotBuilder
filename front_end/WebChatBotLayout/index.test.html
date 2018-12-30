@@ -48,24 +48,100 @@
       </div>
     </div>
     <div class="col">
-     <div id="editArea">
-       <div id="managerDis" class="ui sgements">
-         <div class="ui orange labeled icon button" id="goBackManagerMenu">
-           <i class="left arrow icon"></i>
-           Go back Manager Menu
+     <div class="ui grid" id="editArea">
+       <div class="two wide column">
+         <div class="ui vertical fluid tabular menu">
+           <a class="item" data-tab="first">
+             Bio
+           </a>
+           <a class="item">
+             Plcs
+           </a>
+           <a class="item active">
+             Companies
+           </a>
+           <a class="item">
+             Links
+           </a>
          </div>
-         <div class="ui blue button">
-          <i class="plus icon" id="plusParentProblem"></i>
-        </div>
        </div>
-       <div id="problemDisplay">
-         <div class="ui buttons">
-           <button class="ui orange icon button">
-             <i class="left arrow icon" id="return"></i>
-           </button>
-           <button class="ui orange icon inverted button" id="saveAll">
-             Save All
-           </button>
+       <div class="fourteen wide column">
+         <div class="ui "
+         <div class="ui segments" id="questionNodes">
+           <div class="ui red segment">
+             <div class="ui grid" id="nodeHeader">
+               <div class="twelve wide column">
+                <h3 class="ui header input form">
+                  <input type="text" placeholder="Input your dialogue name" value="112121">
+                </h3>
+                <button class="ui icon button" id="dialogue-edit"><i class="edit icon"></i></button>
+               </div>
+               <div class="four wide column">
+                  <i class="large green thumbs up icon"id="icon-save"></i>
+                  <i class="large red save icon" id="icon-unsave"></i>
+                  <a class="ui label" id="collapse">Collapse</a>
+                  <a class="ui label" id="expand">Expand</a>
+               </div>
+             </div>
+             <div class="ui hidden divider"></div>
+             <div class="ui form">
+               <div class="field">
+                 <h3 class="ui header">Question</h3>
+                 <textarea rows="1" id="queText" ></textarea>
+                 <a class="ui pointing red basic label">
+                    <p id="que-warning">Please not leave the empty value.</p>
+                 </a>
+               </div>
+               <div class="field">
+                 <h3 class="ui header">Answer</h3>
+                 <textarea rows="5" id="ansText"></textarea>
+                 <a class="ui pointing red basic label">
+                    <p id="ans-warning">Please not leave the empty value.</p>
+                 </a>
+               </div>
+             </div>
+             <h3 class="ui horizontal divider header">Child Question</h3>
+             <div class="ui icon fluid input" id="chInput">
+               <input type="text" placeholder="Input your descriptive here" id="chText">
+               <div class="ui labeled button" tabindex="0">
+                  <div class="ui red button" id="plusCh">
+                    <i class="plus icon" id="plusCh"></i> New
+                  </div>
+                  <a class="ui basic red left pointing label">
+                     11111
+                  </a>
+                </div>
+               <a class="ui left pointing red basic label">
+                  <p id="ch-warning">Please not input special &lt; or &gt; character</p>
+                </a>
+             </div>
+             <div class="ui divided selection list">
+               <a class="item">
+                 <div class="ui red horizontal label">Question flow 1</div>
+                 Descriptive text
+               </a>
+               <a class="item">
+                 <div class="ui red horizontal label">Question flow 2</div>
+                 Descriptive text
+                </a>
+             </div>
+             <h3 class="ui horizontal divider header"><i class="image icon"></i>  Image</h3>
+             <div class="ui input">
+               <input type="file" name="myFile">
+               <div id="fileDisplayArea"></div>
+             </div>
+             <div class="ui divider"></div>
+             <div class="ui center aligned segment">
+              <div class="ui buttons" id="saveBtn">
+                  <button class="ui button">Cancel</button>
+                  <div class="or"></div>
+                  <button class="ui positive button">Save</button>
+                </div>
+             </div>
+           </div>
+           <div class="ui red segment">
+
+           </div>
          </div>
        </div>
      </div>
@@ -101,8 +177,8 @@
     <ul class="navbar-nav">
       <div class="row">
         <button class="btn btn-light btn-size-small mr-2 ml-2" data-toggle="modal" data-target="#modal_upload">Upload</button>
-        <button class="btn btn-light btn-size-small mr-2 ml-2" id="_gen">Generate</button>
-        <button class="btn btn-light btn-size-small mr-2" id="_save">Save</button>
+        <button class="btn btn-light btn-size-small mr-2 ml-2">Generate</button>
+        <button class="btn btn-light btn-size-small mr-2">Save</button>
       </div>
     </ul>
   </div>

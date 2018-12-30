@@ -1,2 +1,4 @@
 #ignore config file
 back_end/db/config.js
+back_end/db/config.nober.js
+back_end/node_modules

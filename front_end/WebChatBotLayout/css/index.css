@@ -73,10 +73,62 @@
 	margin-top: 56px;
 	height: 90vh !important;
 }
-.msg-margin {
+/*.msg-margin {
 /*
 	margin-bottom: 62px;
 	padding-right: 6px;
 	padding-left: 12px;
-*/
+
+}*/
+
+#editArea {
+	margin-top: 5vh;
+	height: 90vh;
 }
+
+#editArea .fourteen.wide.stretched.column {
+	overflow: scroll;
+}
+
+#saveBtn {
+	left: 500px;
+
+}
+.segment {
+	overflow:hidden;
+}
+
+/*#nodeHeader .ui.label {
+	/*margin-left: 50%;
+}*/
+
+#expand {
+	display: none;
+}
+
+
+.red.basic.label{
+	display:none;
+}
+
+#ManagerDis {
+	margin-top: 100px;
+	
+}
+
+#editArea {
+	overflow: scroll;
+}
+
+#problemDisplay {
+	display : none;
+}
+
+#icon-save {
+	display : none;
+}
+#icon-unsave {
+	display: none;
+}
+
+

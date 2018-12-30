@@ -47,28 +47,31 @@
         </div>
       </div>
     </div>
-    <div class="col">
-     <div id="editArea">
-       <div id="managerDis" class="ui sgements">
-         <div class="ui orange labeled icon button" id="goBackManagerMenu">
-           <i class="left arrow icon"></i>
-           Go back Manager Menu
-         </div>
-         <div class="ui blue button">
-          <i class="plus icon" id="plusParentProblem"></i>
+    <div class="col" style="margin-top: 70px">
+      <div class="input-group input-group-lg">
+        <div class="input-group-prepend"> <span class="input-group-text" id="inputGroup-sizing-lg">Question</span> </div>
+        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" id="txt_question">
+      </div>
+      <div class="input-group mt-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            <input type="radio" class="ml-3" aria-label="Radio button for following text input">
+            <p class="h5 ml-4 mt-2">Text</p>
+          </div>
         </div>
-       </div>
-       <div id="problemDisplay">
-         <div class="ui buttons">
-           <button class="ui orange icon button">
-             <i class="left arrow icon" id="return"></i>
-           </button>
-           <button class="ui orange icon inverted button" id="saveAll">
-             Save All
-           </button>
-         </div>
-       </div>
-     </div>
+        <input type="text" class="form-control" aria-label="Text input with radio button">
+      </div>
+      <div class="input-group mt-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            <input type="radio" class="ml-3" aria-label="Radio button for following text input">
+            <p class="h5 ml-1 mt-2">Image</p>
+          </div>
+        </div>
+        <input class="mt-3 ml-2 h5" type="file" name="fileUpload">
+      </div>
+      <img class="img-thumbnail w-25 mt-2" src="resources/IMG.png" alt="Demo Image"><br>
+      <button type="button" class="btn btn-primary mt-2">Submit</button>
     </div>
   </div>
 </div>
@@ -101,8 +104,8 @@
     <ul class="navbar-nav">
       <div class="row">
         <button class="btn btn-light btn-size-small mr-2 ml-2" data-toggle="modal" data-target="#modal_upload">Upload</button>
-        <button class="btn btn-light btn-size-small mr-2 ml-2" id="_gen">Generate</button>
-        <button class="btn btn-light btn-size-small mr-2" id="_save">Save</button>
+        <button class="btn btn-light btn-size-small mr-2 ml-2">Generate</button>
+        <button class="btn btn-light btn-size-small mr-2">Save</button>
       </div>
     </ul>
   </div>
@@ -293,7 +296,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="js/handlebars.js"></script>
 <script src="js/background.js"></script>
 <script src="js/fontsize.js"></script>
 <script src="js/fontstyle.js"></script>

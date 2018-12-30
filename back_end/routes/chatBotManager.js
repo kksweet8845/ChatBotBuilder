@@ -4,16 +4,34 @@ var uid = require('uid-safe');
 var {mongoose} = require('../db/mongoose');
 var {ChatBot} = require('../models/chatBot');
 var {User} = require('./../models/user');
-
+var {ChatBotBrain} = require('./../models/chatBotBrain');
+var {ChatBotDialogue} = require('./../models/chatBotDialogue');
 var sessionIDsTable = require('./sessionTable');
 
 var chatBotOpAPI = express.Router();
 
+//create a uid to the front_end
+chatBotOpAPI.post('/uid',(req,res)=>{
+  res.send(uid.sync(18));
+});
 
-chatBotOpAPI.post('/check',(req,res)=>{
+
+chatBotOpAPI.post('/deleteSession',(req,res)=>{
+  var sessionObj = sessionIDsTable.findBySId(req.body.sessionId);
+  sessionObj.path = "/" ;
+    //console.log(sessionObj);
+    res.status(200).send("OK");
+});
+
+
+//fetch the current editing chatBot in edit page
+chatBotOpAPI.post('/fetch',(req,res)=>{
     var sessionObj = sessionIDsTable.findBySId(req.body.sessionId);
-    if(sessionObj != null){
-      const chatBotToken = sessionObj.path;
+    //console.log(sessionObj);
+    if(sessionObj != undefined && sessionObj.path != '/'){
+      console.log("Enter");
+      const chatBotToken = sessionObj.path.substring(1);
+      //console.log(chatBotToken);
       const username = sessionObj.userId;
 
       User.find({
@@ -24,27 +42,200 @@ chatBotOpAPI.post('/check',(req,res)=>{
             res.status(400).send();
             return;
           }
-
+          //console.log(data);
           if(data.length != 0){
             var chatBot = data[0].chatBots.filter((chatBot)=>{
-                return "/" + chatBot.token === chatBotToken;
+                return chatBot.token === chatBotToken;
             });
-            console.log(chatBot);
-            var result = {
-              content: chatBot[0],
-              status: "OK"
-            };
-            res.status(200).send(result);
-
+            //console.log(chatBot);
+            //find the corresponding brain
+            ChatBotBrain.find({
+              token: chatBot[0].token
+            },(err,brains)=>{
+              if(err) {
+                console.log(err);
+                res.status(400).send("No match chatBot brain");
+                return;
+              }
+              if(brains.length != 0){
+                const result = {
+                  content: {
+                    chatBot: chatBot[0],
+                    chatBotBrain: brains[0]
+                  }
+                };
+                
+                res.status(200).send(result);
+                
+              }else {
+                res.status(200).send("No match brain");
+              }
+              
+            })
           }else {
-            res.status(400).send("No match data");
+            res.status(200).send("No match data");
           }
-      })
+      });
+    }else {
+      res.status(400).send();
     }
 
 });
 
+//Update the chatBot data with token
+chatBotOpAPI.post('/update',(req,res)=>{
+   var sessionObj = sessionIDsTable.findBySId(req.body.sessionId);
+   //console.log(sessionObj);
+   var chatBotCursor = JSON.parse(req.body.content);
+   //console.log(chatBotCursor);
+   if(sessionObj != null || sessionObj != undefined){
+     
+     const curChatBotDialogues = chatBotCursor.chatBotBrain.chatBotDialogues;
+     const curChatBot = chatBotCursor.chatBot;
+     const chatBotToken = sessionObj.path.substring(1);
+     //console.log(chatBotToken);
+     const username = sessionObj.userId;
+     ChatBotBrain.findOne({
+       token: chatBotToken
+     },(err,data)=>{
+        if(err){
+          console.log(err);
+          res.status(400).send("No chatBotBrain");
+          return;
+        }
+        //console.log(data);
+        if(data != undefined){
+          if(data.chatBotDialogues.length == 0){
+            curChatBotDialogues.forEach((dialogue)=>{
+              var chatBotDialogue = new ChatBotDialogue({
+                Q: dialogue.Q,
+                A: dialogue.A,
+                name: dialogue.name,
+                token: dialogue.token,
+                isChild: dialogue.isChild
+              });
+                dialogue.btns.forEach((btn)=>{
+                  chatBotDialogue.btns.push(btn);
+                });
+  
+              data.chatBotDialogues.push(chatBotDialogue);
+            });
 
+            data.save().then(()=>{
+                console.log("Dialogue save operation done");
+            });
+          }else {
+            var t,b;
+            curChatBotDialogues.forEach((dialogue)=>{
+                t = 0;
+                data.chatBotDialogues.forEach((oldDialogue)=>{
+                    //console.log("oldDialogue===================",oldDialogue);
+                    //console.log("dialogue======================",dialogue);
+                    if(oldDialogue.token == dialogue.token){
+                        oldDialogue.Q = oldDialogue.Q == dialogue.Q ? oldDialogue.Q : dialogue.Q;
+                        oldDialogue.A = oldDialogue.A == dialogue.A ? oldDialogue.A : dialogue.A;
+                        oldDialogue.name = oldDialogue.name == dialogue.name ? oldDialogue.name : dialogue.name;
+                        oldDialogue.isChild = oldDialogue.isChild == dialogue.isChild ? oldDialogue.isChild : dialogue.isChild;
+                        dialogue.btns.forEach((btn)=>{
+                          oldDialogue.btns.forEach((oldBtn)=>{
+                            //console.log("oldBtn================",oldBtn);
+                            //console.log("btn===================",btn);
+                             if(oldBtn == btn){
+                               b = -1;
+                               return;
+                             }else{
+                               if(b == -1)
+                                  b = -1;
+                                else
+                                  b = 0;
+                             }
+                          });
+                          if(b == 0){
+                            oldDialogue.btns.push(btn);
+                          }
+                        });
+                        t = -1;
+                        return;
+                    }else {
+                      if(t == -1)
+                          t = -1;
+                      else
+                          t = 0;
+                    }
+                });
+                if(t == 0){
+                  var chatBotDialogue = new ChatBotDialogue({
+                    Q: dialogue.Q,
+                    A: dialogue.A,
+                    name: dialogue.name,
+                    token: dialogue.token,
+                    isChild: dialogue.isChild
+                  });
+                    dialogue.btns.forEach((btn)=>{
+                      chatBotDialogue.btns.push(btn);
+                    });
+                  data.chatBotDialogues.push(chatBotDialogue);
+                  //console.log("Push the new dialogue===========");
+                  //console.log(chatBotDialogue);
+                }
+            });
+
+
+            data.save().then(()=>{
+              console.log("Save operation done at chaBotManager.js/185")
+          });
+          }
+          
+          
+
+
+        }
+     });
+     
+     User.findOne({
+        userId: username
+     },(err,data)=>{
+       if(err) {
+         console.log(err);
+         return res.status(400).send(err);
+       }
+
+       if(data != undefined || data != null){
+         var chatBot = data.chatBots.filter((chatBot)=>{
+              return chatBot.token == chatBotToken;
+         });
+         chatBot = chatBot[0];
+         //console.log(chatBot);
+         if(chatBot){
+            chatBot.name = chatBot.name == curChatBot.name ? chatBot.name : curChatBot.name;
+            chatBot.description = chatBot.description == curChatBot.description ? chatBot.description : curChatBot.description;
+            chatBot.font = {
+              style: chatBot.font.style == curChatBot.font.style ? chatBot.font.style : curChatBot.font.style,
+              color: chatBot.font.color == curChatBot.font.color ? chatBot.font.color : curChatBot.font.color
+            };
+            chatBot.bubble = {
+              style: chatBot.bubble.style == curChatBot.bubble.style ? chatBot.bubble.style : curChatBot.bubble.style,
+              color: chatBot.bubble.color == curChatBot.bubble.color ? chatBot.bubble.color : curChatBot.bubble.color
+            };
+            chatBot.background = {
+              style: chatBot.background.style == curChatBot.background.style ? chatBot.background.style : curChatBot.background.style,
+              color: chatBot.background.color == curChatBot.background.color ? chatBot.background.color : curChatBot.background.color
+            };
+            chatBot.image = chatBot.image == curChatBot.image ? chatBot.image : curChatBot.image;
+         }
+
+         data.save().then(()=>{
+           console.log("style and dialogue is been modified");
+           res.status(200).send("Style and dialogue is been modified");
+         });
+       }
+     });
+   }else{
+    res.status(400).send("No session");
+   }
+});
+
+//Create a new chatBot in manager page
 chatBotOpAPI.post('/create',(req,res)=>{
     User.find({
         userId: req.body.username,
@@ -56,14 +247,22 @@ chatBotOpAPI.post('/create',(req,res)=>{
 
       if(data.length!=0){
         const token = uid.sync(18);
+        //chat bot style
         var chatBot = new ChatBot({
           token: token,
           name: req.body.chatBotName,
           description: req.body.description
         });
-        console.log("In chat Bot create path", chatBot);
+        // chat bot dialogue setting
+        var chatBotBrain = new ChatBotBrain({
+          token: token
+        });
+        chatBotBrain.save();
+
+
+        //console.log("In chat Bot create path", chatBot);
         data[0].chatBots.push(chatBot);
-        console.log(data[0].chatBots);
+        //console.log(data[0].chatBots);
         data[0].save().then(()=>{
           let chatArr = data[0].chatBots;
           var curChat = chatArr[chatArr.length-1];
@@ -78,15 +277,29 @@ chatBotOpAPI.post('/create',(req,res)=>{
 
 });
 
-
+//When someone press edit button in manager page
 chatBotOpAPI.post('/edit',(req,res)=>{
     //console.log(sessionIDsTable.findBySId(req.body.sessionId));
     var sessionObj = sessionIDsTable.findBySId(req.body.sessionId);
     sessionObj.path = "/" + req.body.chatBotToken;
-    console.log(sessionObj);
+    //console.log(sessionObj);
     res.send();
 });
 
+
+
+
+//user ask beta version chatBot
+chatBotOpAPI.post('/ask',(req,res)=>{
+    var token = req.body.token;
+
+});
+
+
+chatBotOpAPI.post('/qFormation',(req,res)=>{
+  const token = req.body.token;
+  
+})
 
 
 module.exports = chatBotOpAPI;

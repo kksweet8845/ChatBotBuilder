@@ -12,21 +12,20 @@ var chatBotDialogueSchema = new mongoose.Schema({
     minglength: 1,
     trim : true
   },
-  btn: [{
-    name: {
-      type: String,
-      required: true
-    },
-    hash: {
-      type: String,
-      required: true
-    }
-  }],
-  hash: {
+  btns: [String],
+  token: {
     type: String,
     required: true
   },
-  biset: [String]
+  name:{
+    type: String,
+    required: true
+  },
+  biset: [String],
+  isChild: {
+    type: Boolean,
+    default: false
+  }
 });
 
 var ChatBotDialogue = mongoose.model('ChatBotDialogue',chatBotDialogueSchema);
