@@ -9,6 +9,7 @@ var signUpAPI = require('./routes/signUp');
 var loginAPI = require('./routes/login');
 var chatBotOpAPI = require('./routes/chatBotManager');
 var hbsManagerAPI = require('./routes/hbsManager');
+var chatManagerAPI = require('./routes/chatManager');
 var fs = require('fs');
 const port = 11021;
 
@@ -46,7 +47,7 @@ app.use('/session/signUp',signUpAPI);
 app.use('/session',loginAPI);
 app.use('/chatBot',chatBotOpAPI);
 app.use('/hbs',hbsManagerAPI);
-
+app.use('/conversation',chatManagerAPI);
 /*app.post('/ask',(req,res)=>{
   var form = new formidable.IncomingForm();
   form.parse(req,(err,fields,files)=>{

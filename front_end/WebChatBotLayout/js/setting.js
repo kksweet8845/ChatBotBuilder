@@ -36,7 +36,7 @@ var findElementByToken = (token)=>{
 ///////////////////////////////////////////////////////////
 ////////////////// check the data///////////////////////////
 
-//when the content is modified
+//when the content is modified show save icon
 var modifiedCheck = (ev)=>{
    const id = ev.target.id;
    var t;
@@ -58,6 +58,9 @@ var modifiedCheck = (ev)=>{
      t = $(ev.target).parent().parent().children('#nodeHeader').children('.four.wide.column').children('#icon-unsave');
      //console.log(t);
      t.css("display","inline");
+   }else if(id == "imgText"){
+     t = $(ev.target).parent().parent().children('#nodeHeader').children('.four.wide.column').children('#icon-unsave');
+     t.css("display","inline");
    }
    t.prev().css("display","none");
 };
@@ -77,13 +80,20 @@ var ilegalCheck = (ev)=>{
         w.css("display","inline-flex");
         w.children().html('Do not input &lt; or &gt;');
       }else if(id == "chText"){
+        $(ev.target).val('');
         w = $(ev.target).next().next();
         w.css("display","inline-flex");
         w.children().html('Do not input &lt; or &gt;');
         $(ev.target).next().children()[0].disabled = true;
+      }else if(id == "imgText"){
+        $(ev.target).val('');
+        w = $(ev.target).next().next();
+        w.css("display","inline-flex");
+        w.children().html('Do not input &lt: or &gt;');
+        $(ev.target).next().children()[0].disabled = true;
       }
   }else {
-    if(id == "chText"){
+    if(id == "chText" || id == "imgText"){
       w = $(ev.target).next().children();
       if($(ev.target).val() != "")
         w[0].disabled = false;
@@ -93,8 +103,15 @@ var ilegalCheck = (ev)=>{
     }else if(id == "queText" || id == "ansText"){
         w = $(ev.target).next();
         w.css("display","none");
+        if(ev.target.value == ""){
+          w = $(ev.target).next();
+          w.css("display","inline-flex");
+          w.children().html('Do not leave the empty');
+        }
     }
   }
+
+
 }
 ///////////////////////////////////////////////////////////////////
 //display save icon and hide the unsave icon
@@ -105,6 +122,8 @@ var displaySaveIcon = (t)=>{
     t = t.next();
     t.css("display","none");
 }
+
+
 
 //////////////////////////////////////////////////////////////////
 //save problem
@@ -213,6 +232,25 @@ var fetchUsername = ()=>{
   }
   return un;
 };
+
+var fetchCurStyle = ()=>{
+  const bg = chatBotCursor.chatBot.background;
+  const lbc = chatBotCursor.chatBot.bubble.left.color;
+  const rbc = chatBotCursor.chatBot.bubble.right.color;
+  const lbs = chatBotCursor.chatBot.bubble.left.style;
+  const rbs = chatBotCursor.chatBot.bubble.right.style;
+
+  const fs = chatBotCursor.chatBot.font.style;
+  const fc = chatBotCursor.chatBot.font.color;
+  console.log("bg",bg);
+  console.log("lbc",lbc);
+  console.log("lbs",lbc)
+  $(".display_section").addClass(fs);
+  document.getElementById('window').style.backgroundColor = bg.color;
+  Lbubblecolor.href= lbc;
+  Rbubblecolor.href= rbc;
+
+}
 ////////////////////////////////////////////////////////////
 //reveive a uid from back_end
 var genToken = (callback)=>{
@@ -241,13 +279,107 @@ var updateChatBot = ()=>{
       sessionId: sid
     },
     success: (data)=>{
-      if(data.status == "OK"){
+      console.log(data);
+      if(data == "OK"){
         fetchChatBot();
         console.log("fetching data");
         console.log(data);
-
-
       }
+    },
+    error: (err)=>{
+        console.log(err);
+    }
+  });
+}
+
+
+///////////////////////////////////////////////////////////
+////////// save and generate the biset
+var saveAndGen = ()=>{
+  var sid = fetchSession();
+  //console.log(sid);
+  $.ajax({
+    type: "POST",
+    url: "/chatBot/update",
+    data: {
+      content: JSON.stringify(chatBotCursor),
+      sessionId: sid
+    },
+    success: (data)=>{
+      console.log("saveAndGen");
+      if(data == "OK"){
+        fetchChatBot();
+        genBiset(chatBotCursor.chatBot.token,sid);
+        console.log("generateing data");
+        console.log("fetching data");
+        console.log(data);
+      }
+    },
+    error: (err)=>{
+        console.log(err);
+    }
+  });
+}
+
+var genBiset = (token,sid)=>{
+  $.ajax({
+    type: "POST",
+    url: "/chatBot/generate",
+    data: {
+      chatBotToken : token,
+      sessionId: sid
+    },
+    success: (data)=>{
+      console.log(data);
+      if(data){
+        chatBotCursor.chatBotBrain = data
+        alert("Generation finished");
+        console.log(chatBotCursor);
+      }
+    },
+    error: (err)=>{
+        console.log(err);
+    }
+  })
+}
+
+///////////////////////////////////////////////////////////
+// send the question to evaluate
+var evalQuestion = ()=>{
+  var question = $('#userQuestion').val();
+  var chatBotToken = chatBotCursor.chatBot.token;
+  //console.log(question);
+  //console.log(chatBotToken);
+  $.ajax({
+    type: "POST",
+    url: "/conversation/ask",
+    data: {
+      userQ: question,
+      chatBotToken: chatBotToken
+    },
+    success: (data)=>{
+      //render two converstaion in #window
+      console.log("beforre here");
+      console.log(data.reply);
+      //user 
+      Handlebars.renderQuestionTemplate({
+        dataStyle: "messenger",
+        content: question,
+        isRight: true
+      },'#window',
+      setTimeout(()=>{
+        Handlebars.renderQuestionTemplate({
+          hasChild: data.hasChild,
+          btnText : data.btnText,
+          dataStyle: "messenger",
+          content: data.reply,
+          isRight: false,
+          hasImage: true,
+          avatarLink: "https://i.imgur.com/6oTWGHZ.png"
+        },'#window');
+      },1000));
+      
+      //chatBot
     },
     error: (err)=>{
         console.log(err);
@@ -283,6 +415,7 @@ var fetchManagerDis = ()=>{
   $('#managerDis').show();
   const token = chatBotCursor.chatBot.token;
   $('#problemDisplay').hide();
+  $('#managerDis').children('.blue.segment').remove();
   Handlebars.renderDataHandlebars('proSegments','#managerDis',token);
 
 }
@@ -295,6 +428,7 @@ var displayEditDis = (ev)=>{
   if(name =="New Dialogue"){
     //console.log('New here');
     $('#problemDisplay').css("display","block");
+    $('#problemDisplay').children('.red.segment').remove();
     Handlebars.renderNewHandlebarsTemplate('editNode','New dialogue','#problemDisplay');
     var p = $(ev.target).parent().parent().parent().parent().parent().parent();
     $('#problemDisplay').children().last()[0].id = p[0].id;
@@ -329,13 +463,15 @@ var fetchChatBot = ()=>{
       sessionId: sid
     },
     success: (data)=>{
-      //console.log(data);
+      console.log(data.status);
       if(data.status="OK"){
+        console.log("Entering");
         chatBotCursor = data.content;
         console.log(chatBotCursor);
       }
       //recall the style
-
+      
+      fetchCurStyle();
       //recall the data in the body content (render)
       fetchManagerDis();
     },
@@ -402,6 +538,37 @@ Handlebars.fetchData = (name,token,callback)=>{
     async: false
   });
 }
+Handlebars.fetchQuestionTemplate = (setting,callback)=>{
+  var dataStyle = setting.dataStyle ? setting.dataStyle : "telegram";
+  var isRight = setting.isRight == true ? setting.isRight : false;
+  var isRead = setting.isRead ? setting.isRead : false;
+  var username = setting.username ? setting.username : chatBotCursor.chatBot.name;
+  var hasImgae = setting.hasImage ? setting.hasImage : false;
+  var avatarLink = setting.avatarLink ? setting.avatarLink : chatBotCursor.chatBot.name;
+  var authorName = setting.authorName ? setting.authorName : chatBotCursor.chatBot.name;
+  var content = setting.content ? setting.content : "";
+  var hasChild = setting.hasChild == false ? false : true;
+  var btnText = setting.btnText ? setting.btnText : null;
+  $.ajax({
+    type: "POST",
+    url: "/hbs/sentence",
+    data: {
+      dataStyle : dataStyle,
+      isRight : isRight,
+      isRead : isRead,
+      username : username,
+      hasImage : hasImgae,
+      authorName : authorName,
+      avatarLink: avatarLink,
+      content : content,
+      hasChild : hasChild,
+      btnText : btnText
+    },
+    success: (data)=>{
+      if(callback) callback(data);
+    }
+  })
+}
 
 Handlebars.renderDataHandlebars = (withTemplate,inElement,token)=>{
   Handlebars.fetchData(withTemplate,token,(template)=>{
@@ -409,6 +576,14 @@ Handlebars.renderDataHandlebars = (withTemplate,inElement,token)=>{
   });
 }
 
+Handlebars.renderQuestionTemplate =(setting,inElement,cb)=>{
+  Handlebars.fetchQuestionTemplate(setting,(template)=>{
+      $(inElement).append(template);
+      console.log($(inElement).children().last());
+      $(inElement).children().last().hide().fadeIn(300);
+      if(cb instanceof Function) cb();
+  })
+}
 
 Handlebars.renderNewHandlebarsTemplate = (withTemplate,description,inElement)=>{
   Handlebars.createNewDialogue(withTemplate,description,(template)=>{
@@ -478,6 +653,7 @@ $(document).on('click','#dialogue-edit',(ev)=>{
 //Check the ilegal input < or > ...
 $(document).on('input',(ev)=>{
   ilegalCheck(ev);
+  if(ev.target.id != "userQuestion")
   modifiedCheck(ev);
 });
 
@@ -541,8 +717,42 @@ $(document).on('click','#plusCh',(ev)=>{
   $(ev.target).parent().prev().val('');
   $(ev.target)[0].disabled = true;
 });
+///////////////////////////////////////////////////////
+//create new image
+$(document).on('click','#plusImg',(ev)=>{
+  var url,t;
+  console.log(ev.target.tagName);
+  if(ev.target.tagName == 'I'){
+     url = $(ev.target).parent().parent().prev().val();
+     t = $(ev.target).parent().parent().parent().prev(); 
+  }
+
+  console.log(url);
+  console.log(t);
+  if(url != "" && url != undefined){
+    Handlebars.renderNewHandlebarsTemplateRelated('imgFlow',url,t);
+    $(ev.target).parent().parent().prev().val('');
+    //save the path into 
+    chatBotCursor.chatBot.image = url;
+  }
+  if(url == "" || url == undefined){
+    $(ev.target).parent().parent().prev().val('');
+    ev.target.disabled = true;
+    return;
+  }
+})
+
+///////////////////////////////////////////////////////////
+//delete old image
+$(document).on('click','img',(ev)=>{
+  
+});
 
 
+/////////////////////////////////////////////////////////////
+$(document).om('click','.cu.chat .button',(ev)=>{
+  
+});
 
 
 ///////////////////////////////////////////////////////////////
@@ -585,11 +795,33 @@ $('#_save').click((ev)=>{
       updateChatBot();
       $('#managerDis').children('.ui.blue.segment').remove();
       fetchManagerDis();
+      alert("Save operation done");
   }
+  // $('#save-animation')
+  //   .modal('show');
 });
+
 $('#goBackManagerMenu').click(()=>{
   deleteSessionPath();
 });
+
+$('#_gen').click(()=>{
+  saveAndGen();
+});
+
+$('#btn_ask').click(()=>{
+  console.log('clicking');
+  if($('#userQuestion').val() != ""){
+      evalQuestion();
+  }else {
+
+  }
+});
+
+$('#check').click(()=>{
+  console.log(chatBotCursor);
+})
+
 
 
 });

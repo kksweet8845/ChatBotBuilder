@@ -1,0 +1,31 @@
+<div class="cu chat" data-style="{{dataStyle}}">
+  {{#if hasChild}}
+  <div class="message-group">
+  {{/if}}
+    <div class="message text {{#if isRight}}right{{else}}{{/if}} {{#if isRead}}read{{else}}{{/if}} ">
+    {{>avatar}}
+    <div class="content">
+      {{>authorP}}
+      <div class="text">
+        <p>{{content}}</p>
+      </div>
+      {{>meta}}
+    </div>
+  </div>
+  {{#if hasChild}}
+    <div class="message text">
+      <div class="content">
+       <div class="ui vertical buttons">
+         {{#each buttons}}
+            <div class="ui small button">
+                {{btnText}}
+            </div>
+         {{/each}}
+      </div>
+     </div>
+    </div>
+  {{/if}}
+  {{#if hasChild}}
+  </div>
+  {{/if}}
+</div>

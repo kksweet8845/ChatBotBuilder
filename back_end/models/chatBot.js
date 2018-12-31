@@ -17,12 +17,18 @@ var chatBotSchema = new mongoose.Schema({
     trim: true
   },
   font:{
-    style: { type: String , trime: true , default: ""},
+    style: { type: String , trime: true , default: "bubble1"},
     color: { type: String , trime: true , default: "black"}
   },
   bubble: {
-    style: { type: String , trime: true , default: "normal"},
-    color: { type: String , trime: true , default: "0"}
+    left: {
+      style: { type: String , trime: true , default: "telegram"},
+      color: { type: String , trime: true , default: "css/Lbubblecolor/LbubbleWhi.css"}
+    },
+    right: {
+      style: { type: String , trime: true , default: "telegram"},
+      color: { type: String , trime: true , default: "css/Rbubblecolor/RbubbleBlu.css"}
+    }
   },
   background: {
     style: { type: String , trime: true , default: "none"},

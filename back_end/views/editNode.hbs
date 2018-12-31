@@ -51,10 +51,9 @@
      {{/each}}
    </div>
    <h3 class="ui horizontal divider header"><i class="image icon"></i>  Image</h3>
-   <div class="ui input">
-     <input type="file" name="myFile">
-     <div id="fileDisplayArea"></div>
-   </div>
+    {{#each imgIndex}}
+      {{>imgFlow}}
+    {{/each}}
    <div class="ui divider"></div>
    <div class="ui center aligned segment">
     <div class="ui buttons" id="saveBtn">

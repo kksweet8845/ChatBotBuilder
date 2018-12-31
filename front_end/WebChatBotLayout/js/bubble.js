@@ -1,5 +1,5 @@
 $(document).ready(function() {  
-    $('#btn_ask').click(()=>{
+    $('').click(()=>{
       $.post('ask',{
         userQ: $('#userQuestion').val()
       },(data)=>{

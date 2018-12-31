@@ -26,7 +26,7 @@ $(document).ready(function() {
             item += '  </div>';
             item += '</div>';    
           console.log(item);
-          $('#window').append(item); //append user's bubble
+          $('#window').append(item); //append user's bubble right
 
           var data = "Hello Hello Hello";
           var reply = data;
@@ -49,7 +49,7 @@ $(document).ready(function() {
             item2 += '  </div>';
             item2 += '</div>'; 
           console.log(item2);
-          $('#window').append(item2); //append chatbot's bubble
+          $('#window').append(item2); //append chatbot's bubble left
 
           var div = document.getElementById('window');  
           div.scrollTop = div.scrollHeight; //auto scroll to bottom

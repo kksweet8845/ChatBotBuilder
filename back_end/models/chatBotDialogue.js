@@ -25,6 +25,9 @@ var chatBotDialogueSchema = new mongoose.Schema({
   isChild: {
     type: Boolean,
     default: false
+  },
+  image: {
+    type: String
   }
 });
 

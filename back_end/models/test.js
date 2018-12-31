@@ -18,7 +18,9 @@ var txtToDialogue = (path,callback)=>{
   rl.on('line',(line)=>{
     if(i%2 == 0){
       dialogue = new ChatBotDialogue({
-        Q: line
+        Q: line,
+        name: line,
+        token: uid.sync(18)
       });
     }else if(i%2 == 1){
       dialogue.A = line;
@@ -34,7 +36,7 @@ var brain;
 txtToDialogue('./qaq',(dialogues)=>{
   //console.log(dialogues);
   brain = new ChatBotBrain({
-    token: uid.sync(18)
+    token: uid.sync(18),
   });
   brain.save().then((doc)=>{
     //console.log(dialogues);
@@ -49,6 +51,9 @@ txtToDialogue('./qaq',(dialogues)=>{
     console.log(index);
     console.log(dia.biset);
   });
+  doc.save().then(()=>{
+    console.log("save the document to database");
+  })
   },(e)=>{
     console.log(e);
   });

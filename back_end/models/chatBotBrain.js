@@ -12,6 +12,7 @@ var ChatBotBrain = mongoose.model('ChatBotBrain',chatBotBrainSchema);
 
 //ChatBotParse Question to bigram
 var schemaToBigram = (dialogue)=>{
+  dialogue.biset = [];
   for(var i=0;i<dialogue.Q.length-1;i++){
     let tempS = '';
     tempS = dialogue.Q[i] + dialogue.Q[i+1];
@@ -19,16 +20,18 @@ var schemaToBigram = (dialogue)=>{
   }
 }
 
+
 var parseBrain = (brain)=>{
     brain.chatBotDialogues.forEach((dialogue)=>{
         schemaToBigram(dialogue);
     });
 }
 
-var qToBigram = (dialouge)=>{
+var qToBigram = (dialogue)=>{
     let Qdic = [];
-    for(var i=0;i<dialogue.length;i++){
-      let tempS = dialogue[i] + dialouge[i+1];
+    console.log(dialogue);
+    for(var i=0;i<dialogue.length-1;i++){
+      let tempS = dialogue[i] + dialogue[i+1];
       Qdic.push(tempS);
     }
     return Qdic;
@@ -36,36 +39,42 @@ var qToBigram = (dialouge)=>{
 
 
 var evalQuery = (brain,quest,cb)=>{
+    //console.log(quest);
     var Qdic = qToBigram(quest);
+    //console.log(Qdic);
     let scoreboard = [];
     for(var i=0;i<brain.chatBotDialogues.length;i++){
       scoreboard.push(0);
     }
+    //console.log(scoreboard);
     for(i=0;i<Qdic.length;i++)
       for(var j=0;j<brain.chatBotDialogues.length;j++){
         if(brain.chatBotDialogues[j].biset.includes(Qdic[i]))
           scoreboard[j]++;
       }
-
+    //console.log(scoreboard);
     for(i=0;i<brain.chatBotDialogues.length;i++){
+      if(scoreboard[i] != 0)
       scoreboard[i] = scoreboard[i]/brain.chatBotDialogues[i].biset.length;
     }
 
     var max_index = -1;
     var max_val = -1;
-
+    //console.log(scoreboard);
     for(i=0;i<brain.chatBotDialogues.length;i++){
       if(scoreboard[i] != 0 && scoreboard[i] > max_val){
         max_val = scoreboard[i];
         max_index = i;
       }
     }
-
+    //console.log(brain.chatBotDialogues[max_index].A);
     if(max_index == -1){
       var err = true;
+      cb(err,undefined,max_index);
+    }else {
+      var err = false;
+      cb(err,brain.chatBotDialogues[max_index]);
     }
-
-    cb(err,brain.chatBotDialogues[max_index].A);
 
 }
 

@@ -136,6 +136,7 @@ chatBotOpAPI.post('/update',(req,res)=>{
                         oldDialogue.A = oldDialogue.A == dialogue.A ? oldDialogue.A : dialogue.A;
                         oldDialogue.name = oldDialogue.name == dialogue.name ? oldDialogue.name : dialogue.name;
                         oldDialogue.isChild = oldDialogue.isChild == dialogue.isChild ? oldDialogue.isChild : dialogue.isChild;
+                        oldDialogue.image = oldDialogue.image == dialogue.image ? oldDialogue.image : dialogue.image;
                         dialogue.btns.forEach((btn)=>{
                           oldDialogue.btns.forEach((oldBtn)=>{
                             //console.log("oldBtn================",oldBtn);
@@ -169,7 +170,8 @@ chatBotOpAPI.post('/update',(req,res)=>{
                     A: dialogue.A,
                     name: dialogue.name,
                     token: dialogue.token,
-                    isChild: dialogue.isChild
+                    isChild: dialogue.isChild,
+                    image: dialogue.image
                   });
                     dialogue.btns.forEach((btn)=>{
                       chatBotDialogue.btns.push(btn);
@@ -214,8 +216,14 @@ chatBotOpAPI.post('/update',(req,res)=>{
               color: chatBot.font.color == curChatBot.font.color ? chatBot.font.color : curChatBot.font.color
             };
             chatBot.bubble = {
-              style: chatBot.bubble.style == curChatBot.bubble.style ? chatBot.bubble.style : curChatBot.bubble.style,
-              color: chatBot.bubble.color == curChatBot.bubble.color ? chatBot.bubble.color : curChatBot.bubble.color
+              left: {
+                style: chatBot.bubble.left.style == curChatBot.bubble.left.style ? chatBot.bubble.left.style : curChatBot.bubble.left.style,
+                color: chatBot.bubble.left.color == curChatBot.bubble.left.color ? chatBot.bubble.left.color : curChatBot.bubble.left.color
+              },
+              right: {
+                style: chatBot.bubble.right.style == curChatBot.bubble.right.style ? chatBot.bubble.right.style : curChatBot.bubble.right.style,
+                color: chatBot.bubble.right.color == curChatBot.bubble.right.color ? chatBot.bubble.right.color : curChatBot.bubble.right.color
+              }
             };
             chatBot.background = {
               style: chatBot.background.style == curChatBot.background.style ? chatBot.background.style : curChatBot.background.style,
@@ -226,7 +234,7 @@ chatBotOpAPI.post('/update',(req,res)=>{
 
          data.save().then(()=>{
            console.log("style and dialogue is been modified");
-           res.status(200).send("Style and dialogue is been modified");
+           res.status(200).send("OK");
          });
        }
      });
@@ -288,18 +296,38 @@ chatBotOpAPI.post('/edit',(req,res)=>{
 
 
 
+chatBotOpAPI.post('/generate',(req,res)=>{
+    const chatBotToken = req.body.chatBotToken;
+    const sessionId = req.body.sid;
 
-//user ask beta version chatBot
-chatBotOpAPI.post('/ask',(req,res)=>{
-    var token = req.body.token;
+    ChatBotBrain.findOne({
+      token: chatBotToken
+    },(err,doc)=>{
+        if(err){
+          console.log(err);
+          console.log("error occur");
+          return res.status(400).send();
+        }
+        if(doc != undefined || doc != null){
 
+            ChatBotBrain.parseBrain(doc);
+            doc.chatBotDialogues.forEach((dia,index)=>{
+              console.log('===============================');
+              console.log(index);
+              console.log(dia.biset);
+            });
+           doc.save().then((newDoc)=>{
+              console.log("save the biset document to database");
+              res.status(200).send(newDoc)
+           },(e)=>{
+             console.log(e);
+           });
+        }
+    })
 });
 
 
-chatBotOpAPI.post('/qFormation',(req,res)=>{
-  const token = req.body.token;
-  
-})
+
 
 
 module.exports = chatBotOpAPI;

@@ -51,10 +51,27 @@
      {{/each}}
    </div>
    <h3 class="ui horizontal divider header"><i class="image icon"></i>  Image</h3>
-   <div class="ui input">
-     <input type="file" name="myFile">
-     <div id="fileDisplayArea"></div>
+   <div id="imgDisplay">
+    {{#each imgIndex}}
+       {{>imgFlow}}
+    {{/each}}
    </div>
+  <div class="ui icon fluid input">
+     <input type="text" placeholder="Input your descriptive here" id="imgText">
+     <div class="ui labeled button" tabindex="0">
+        <button class="ui red button" disabled>
+          <i class="plus icon" id="plusImg"></i>
+          <i class="image icon" id="plusImg"></i>
+        </button>
+        <a class="ui basic red left pointing label">
+           {{childNum}}
+        </a>
+      </div>
+     <a class="ui left pointing red basic label">
+        <p id="ch-warning">Please not input special &lt; or &gt; character</p>
+      </a>
+   </div>
+  </div>
    <div class="ui divider"></div>
    <div class="ui center aligned segment">
     <div class="ui buttons" id="saveBtn">

@@ -1,0 +1,16 @@
+<div class="message img {{#if imgOnly}}only{{else}}{{/if}} ">
+  {{>avatar}}
+  <div class="content">
+    {{>author}}
+    <img src="{{src}}"/>
+    {{#if imgOnly}}
+      <div class="text">
+          {{#each iterator}}
+              <p>{{content}}</p>
+          {{/each}}
+      </div>
+    {{else}}
+    {{/if}}
+    {{>meta}}
+  </div>
+</div>

@@ -74,6 +74,10 @@ hbsManagerAPI.post('/create',(req,res)=>{
             index: '1',
             desText: req.body.description
         });
+    }else if(filename == "imgFlow.hbs"){
+        res.render(req.body.filename,{
+            url: req.body.description
+        });
     }else {
         res.status(400).send("Wrong data");
     }
@@ -153,6 +157,31 @@ hbsManagerAPI.post('/fetch',(req,res)=>{
 });
 
 
+hbsManagerAPI.post('/sentence',(req,res)=>{
+    var date = new Date();
+    console.log(req.body);
+    const context = {
+        dataStyle: req.body.dataStyle,
+        isRight : req.body.isRight == 'false' ? false : true,
+        isRead : req.body.isRead == 'false' ? false : true,
+        hasImage : req.body.hasImage ,
+        authorName : req.body.authorName,
+        content : req.body.content,
+        curTime : date.getHours() + ':' + date.getMinutes()
+    }
+    if(req.body.hasImage){
+        context.avatarLink = req.body.avatarLink;
+    }
+    if(req.body.hasChild == 'true'){
+        context.hasChild = true;
+        context.buttons = [];
+        req.body.btnText.forEach((text)=>{
+            context.buttons.push(text);
+        });
+    }
+    console.log(context);
+    res.render('bubble.hbs', context);
+});
 
 
 

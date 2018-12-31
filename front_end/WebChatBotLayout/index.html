@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -21,6 +21,7 @@
 </head>
 
 <body>
+<!-- Pop up save animation-->
 <!-- Top NavBar -->
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top justify-content-end"> <a class="navbar-brand ml-5" href="index.html" >Chatbot Builder</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar"> <span class="navbar-toggler-icon"></span> </button>
@@ -102,7 +103,7 @@
     </ul>
     <ul class="navbar-nav">
       <div class="row">
-        <button class="btn btn-light btn-size-small mr-2 ml-2" data-toggle="modal" data-target="#modal_upload">Upload</button>
+        <button class="btn btn-light btn-size-small mr-2 ml-2" data-toggle="modal" id="check">Upload</button>
         <button class="btn btn-light btn-size-small mr-2 ml-2" id="_gen">Generate</button>
         <button class="btn btn-light btn-size-small mr-2" id="_save">Save</button>
       </div>
@@ -315,7 +316,7 @@
 </div>
 
 <!-- Scripts -->
-<script src="js/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -323,10 +324,10 @@
 <script src="js/background.js"></script>
 <script src="js/fontsize.js"></script>
 <script src="js/fontstyle.js"></script>
-<script src="js/bubble.js"></script>
+<!-- <script src="js/bubble.js"></script> -->
 <script src="js/setting.js"></script>
 <script src="js/Lbubblecolor.js"></script>
 <script src="js/Rbubblecolor.js"></script>
-<script src="js/generate.js"></script>
+<!-- <script src="js/generate.js"></script> -->
 </body>
 </html>
