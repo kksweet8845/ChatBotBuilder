@@ -8,6 +8,13 @@ var {ChatBotBrain} = require('./../models/chatBotBrain');
 
 var chatManagerAPI = express.Router();
 
+var findProblemByToken = (obj,token)=>{
+  var index =  obj.chatBotDialogues.findIndex((dialogue)=>{
+                    return dialogue.token == token;
+                });
+  return obj.chatBotDialogues[index];
+}
+
 //ask question
 chatManagerAPI.post('/ask',(req,res)=>{
     var userQ = req.body.userQ;
@@ -30,20 +37,26 @@ chatManagerAPI.post('/ask',(req,res)=>{
                 reply: ans.A
               }
             }else {
+              console.log(ans.btns);
               var hasChild = ans.btns.length > 0 ? true : false;
               var btnText = [];
-              doc.chatBotDialogues.forEach((dialogue,i)=>{
-                ans.btns.forEach((ans_token)=>{
-                  if(dialogue.token == ans_token){
-                    btnText.push(dialogue.Q);
-                  }
-                })
-              }); 
-
+              var btnIds = [];
+              if(hasChild){
+                doc.chatBotDialogues.forEach((dialogue,i)=>{
+                  ans.btns.forEach((ans_token)=>{
+                    if(dialogue.token == ans_token){
+                      btnText.push(dialogue.Q);
+                      btnIds.push(dialogue.token);
+                    }
+                  });
+                }); 
+              }
+              console.log(btnText);
               result = {
                 reply: ans.A,
                 hasChild: hasChild,
-                btnText : btnText
+                btnText : btnText,
+                btnIds: btnIds
               };
             }
             console.log("ans:",ans.A , "at chatManager.js/27");
@@ -54,6 +67,45 @@ chatManagerAPI.post('/ask',(req,res)=>{
     })
 });
 
+chatManagerAPI.post('/standard',(req,res)=>{
+  const chatBotToken = req.body.chatBotToken;
+  const proToken = req.body.token;
+  ChatBotBrain.findOne({
+    token: chatBotToken
+  },(err,doc)=>{
+    if(err){
+      console.log(err);
+      return res.status(400).send();
+    }
+
+    doc.chatBotDialogues.forEach((dialogue)=>{
+      if(dialogue.token == proToken){
+        var hasChild = dialogue.btns.length ? true : false;
+        var btnText = [];
+        var btnIds = [];
+        if(hasChild){
+          dialogue.btns.forEach((token)=>{
+            btnIds.push(token);
+            var d = findProblemByToken(doc,token);
+            btnText.push(d.Q);
+          });
+        }
+
+        const result = {
+          question: dialogue.Q,
+          reply: dialogue.A,
+          hasChild : hasChild,
+          btnIds: btnIds,
+          btnText : btnText
+          
+        }
+        res.status(200).send(result);
+        
+      }
+    });
+
+  });
+});
 
 module.exports = chatManagerAPI;
 

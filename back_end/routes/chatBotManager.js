@@ -121,7 +121,8 @@ chatBotOpAPI.post('/update',(req,res)=>{
               data.chatBotDialogues.push(chatBotDialogue);
             });
 
-            data.save().then(()=>{
+            data.save().then((doc)=>{
+              console.log(doc);
                 console.log("Dialogue save operation done");
             });
           }else {
@@ -138,9 +139,10 @@ chatBotOpAPI.post('/update',(req,res)=>{
                         oldDialogue.isChild = oldDialogue.isChild == dialogue.isChild ? oldDialogue.isChild : dialogue.isChild;
                         oldDialogue.image = oldDialogue.image == dialogue.image ? oldDialogue.image : dialogue.image;
                         dialogue.btns.forEach((btn)=>{
+                          b = 0;
                           oldDialogue.btns.forEach((oldBtn)=>{
-                            //console.log("oldBtn================",oldBtn);
-                            //console.log("btn===================",btn);
+                            console.log("oldBtn================",oldBtn);
+                            console.log("btn===================",btn);
                              if(oldBtn == btn){
                                b = -1;
                                return;

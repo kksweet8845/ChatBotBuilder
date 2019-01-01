@@ -75,22 +75,26 @@ var ilegalCheck = (ev)=>{
         w = $(ev.target).next();
         w.css("display","inline-flex");
         w.children().html('Do not input &lt; or &gt;');
+        return false;
       }else if(id == "ansText"){
         w = $(ev.target).next();
         w.css("display","inline-flex");
         w.children().html('Do not input &lt; or &gt;');
+        return false;
       }else if(id == "chText"){
         $(ev.target).val('');
         w = $(ev.target).next().next();
         w.css("display","inline-flex");
         w.children().html('Do not input &lt; or &gt;');
         $(ev.target).next().children()[0].disabled = true;
+        return false;
       }else if(id == "imgText"){
         $(ev.target).val('');
         w = $(ev.target).next().next();
         w.css("display","inline-flex");
         w.children().html('Do not input &lt: or &gt;');
         $(ev.target).next().children()[0].disabled = true;
+        return false;
       }
   }else {
     if(id == "chText" || id == "imgText"){
@@ -107,12 +111,68 @@ var ilegalCheck = (ev)=>{
           w = $(ev.target).next();
           w.css("display","inline-flex");
           w.children().html('Do not leave the empty');
+          return false;
         }
     }
   }
 
+  return true;
+
 
 }
+
+
+var ilegalCheckByEle = (ele)=>{
+  var rMatch = new RegExp('<script[\s\S]*?>[\s\S]*?<\/script>','gi');
+  console.log(ele.value);
+  if(rMatch.test(ele.value)){
+    alert("Please check all the data before send,don't leave the ilegal dialogue");
+    return false;
+  }
+  if(ele.value == ""){
+    alert("Please check all the data before sending,don't leave the empty dialogue");
+    return false;
+  }
+  return true;
+}
+////////////////////////////////////////////////////////////////
+//check all data before save _save
+var checkChatBotCursor = ()=>{
+  chatBotCursor.chatBotBrain.chatBotDialogues.forEach((dialogue)=>{
+    if(dialogue.A == "" || dialogue.Q == ""){
+      
+      alert("Please check all data,don't leave empty dialogue");
+      return false;
+    }
+  });
+  return true;
+}
+///////////////////////////////////////////////////////////////////
+//check all curent editNodes
+var checkAllEditNode = ()=>{
+  var editNodes = $('#problemDisplay').children('.red.segment');
+  console.log(editNodes);
+  if(editNodes.length > 0){
+    for(var i =0;i<editNodes.length-1;i++){
+      var t = editNodes[i];
+      var nameText = $(t).find('#nameText')[0];
+      var queText = $(t).find('#queText')[0];
+      var ansText = $(t).find('#ansText')[0];
+      console.log(nameText);
+      console.log(queText);
+      console.log(ansText);
+      if(!ilegalCheckByEle(nameText) || !ilegalCheckByEle(queText) || !ilegalCheckByEle(ansText)){
+          return false;
+      }
+      
+    }
+
+    
+  }
+  return true;
+}
+
+
 ///////////////////////////////////////////////////////////////////
 //display save icon and hide the unsave icon
 
@@ -270,6 +330,9 @@ var genToken = (callback)=>{
 // send back data
 var updateChatBot = ()=>{
   var sid = fetchSession();
+  if(!checkChatBotCursor()){
+      return ;
+  }
   //console.log(sid);
   $.ajax({
     type: "POST",
@@ -281,7 +344,7 @@ var updateChatBot = ()=>{
     success: (data)=>{
       console.log(data);
       if(data == "OK"){
-        fetchChatBot();
+        //fetchChatBot();
         console.log("fetching data");
         console.log(data);
       }
@@ -297,6 +360,10 @@ var updateChatBot = ()=>{
 ////////// save and generate the biset
 var saveAndGen = ()=>{
   var sid = fetchSession();
+  if(!checkChatBotCursor()){
+    alert("Please check all data,don't leave empty dialogue");  
+    return; 
+  }
   //console.log(sid);
   $.ajax({
     type: "POST",
@@ -332,14 +399,41 @@ var genBiset = (token,sid)=>{
     success: (data)=>{
       console.log(data);
       if(data){
+        console.log("link");
         chatBotCursor.chatBotBrain = data
         alert("Generation finished");
+        genLink(chatBotCursor.chatBot.token);
         console.log(chatBotCursor);
       }
     },
     error: (err)=>{
         console.log(err);
     }
+  })
+}
+
+//////////////////////////////////////////////////////////
+//generate the iframe link
+var genLink = (chatBotToken)=>{
+  const sid = fetchSession();
+  $.ajax({
+    type: "POST",
+    url: "/release/generate",
+    data: {
+      chatBotToken: chatBotToken,
+      sessionId: sid
+
+    },
+    success: (data)=>{
+      //pop up a string
+      alert("Please press F12 to catch the link");
+      console.log(data.iframe);
+      
+    },  
+    error: (err)=>{
+      console.log(err);
+    }
+
   })
 }
 
@@ -359,25 +453,35 @@ var evalQuestion = ()=>{
     },
     success: (data)=>{
       //render two converstaion in #window
-      console.log("beforre here");
-      console.log(data.reply);
+      // console.log("beforre here");
+      // console.log(data);
       //user 
       Handlebars.renderQuestionTemplate({
-        dataStyle: "messenger",
+        dataStyle: "telegram",
         content: question,
         isRight: true
-      },'#window',
-      setTimeout(()=>{
-        Handlebars.renderQuestionTemplate({
-          hasChild: data.hasChild,
-          btnText : data.btnText,
-          dataStyle: "messenger",
-          content: data.reply,
-          isRight: false,
-          hasImage: true,
-          avatarLink: "https://i.imgur.com/6oTWGHZ.png"
-        },'#window');
-      },1000));
+      },'#window',()=>{
+        $('#window').stop().animate({
+          scrollTop: $('#window')[0].scrollHeight
+        },1000);
+        setTimeout(()=>{
+          Handlebars.renderQuestionTemplate({
+            hasChild: data.hasChild,
+            btnText : data.btnText,
+            dataStyle: "telegram",
+            content: data.reply,
+            isRight: false,
+            hasImage: true,
+            avatarLink: "https://i.imgur.com/6oTWGHZ.png",
+            btnIds: data.btnIds
+          },'#window',()=>{
+            $('#window').stop().animate({
+              scrollTop: $('#window')[0].scrollHeight
+            },1000);
+          });
+
+        },1000)
+      });
       
       //chatBot
     },
@@ -386,6 +490,53 @@ var evalQuestion = ()=>{
     }
   });
 }
+
+///////////////////////////////////////////////////////////
+//eval standard question
+var evalOfficialQuestion = (id)=>{
+  var chatBotToken = chatBotCursor.chatBot.token;
+  var proToken = id;
+
+  $.ajax({
+    type: "POST",
+    url: "/conversation/standard",
+    data: {
+      chatBotToken: chatBotToken,
+      token: proToken
+    },
+    success: (data)=>{
+      Handlebars.renderQuestionTemplate({
+        dataStyle: "telegram",
+        content: data.question,
+        isRight: true
+      },'#window',()=>{
+        $('#window').stop().animate({
+          scrollTop: $('#window')[0].scrollHeight
+        },1000);
+        setTimeout(()=>{
+          Handlebars.renderQuestionTemplate({
+            hasChild: data.hasChild,
+            btnText : data.btnText,
+            dataStyle: "telegram",
+            content: data.reply,
+            isRight: false,
+            hasImage: true,
+            avatarLink: "https://i.imgur.com/6oTWGHZ.png",
+            btnIds: data.btnIds
+          },'#window',()=>{
+            $('#window').stop().animate({
+              scrollTop: $('#window')[0].scrollHeight
+            },1000);
+          });
+        },1000)
+      });
+    },
+    error: (err)=>{
+      console.log(err);
+    }
+  })
+}
+
 ///////////////////////////////////////////////////////////
 //Go back menu with delete session path
 var deleteSessionPath = ()=>{
@@ -547,8 +698,13 @@ Handlebars.fetchQuestionTemplate = (setting,callback)=>{
   var avatarLink = setting.avatarLink ? setting.avatarLink : chatBotCursor.chatBot.name;
   var authorName = setting.authorName ? setting.authorName : chatBotCursor.chatBot.name;
   var content = setting.content ? setting.content : "";
-  var hasChild = setting.hasChild == false ? false : true;
+  var hasChild = setting.hasChild == true ? true : false;
   var btnText = setting.btnText ? setting.btnText : null;
+  var btnIds = setting.btnIds ? setting.btnIds : null;
+  // console.log(setting);
+  //console.log('=======',hasChild);
+  // console.log(setting.hasChild);
+  console.log(btnText);
   $.ajax({
     type: "POST",
     url: "/hbs/sentence",
@@ -562,12 +718,13 @@ Handlebars.fetchQuestionTemplate = (setting,callback)=>{
       avatarLink: avatarLink,
       content : content,
       hasChild : hasChild,
-      btnText : btnText
+      btnText : JSON.stringify(btnText),
+      btnIds : JSON.stringify(btnIds)
     },
     success: (data)=>{
       if(callback) callback(data);
     }
-  })
+  });
 }
 
 Handlebars.renderDataHandlebars = (withTemplate,inElement,token)=>{
@@ -750,8 +907,10 @@ $(document).on('click','img',(ev)=>{
 
 
 /////////////////////////////////////////////////////////////
-$(document).om('click','.cu.chat .button',(ev)=>{
-  
+$(document).on('click','.cu.chat .button',(ev)=>{
+  var t = $(ev.target);
+  console.log(t[0].id);
+  evalOfficialQuestion(t[0].id);
 });
 
 
@@ -772,30 +931,38 @@ $(document).on('click','.ui.positive.button',(ev)=>{
 $('#saveAll').click((ev)=>{
   var t = $(ev.target).parent().next();
   //console.log(t);
-  saveProByEle(t);
-  updateChatBot();
+  if(checkAllEditNode()){
+    saveProByEle(t);
+    updateChatBot();
+  }
+  
 });
 
 
 
 //update the chatBot data
 $('#return').click((ev)=>{
-  updateChatBot();
+  if(checkAllEditNode()){
+    updateChatBot();
   //display manageerDis
-  $('#managerDis').show();
-  $('#problemDisplay').hide();
+    $('#managerDis').show();
+    $('#problemDisplay').hide();
   //delete  problemDisplay
-  $('#problemDisplay').children('.red.segment').remove();
-  $('#managerDis').children('.blue.segment').remove();
-  fetchManagerDis();
+    $('#problemDisplay').children('.red.segment').remove();
+    $('#managerDis').children('.blue.segment').remove();
+    fetchManagerDis();
+  }
 });
 
 $('#_save').click((ev)=>{
+  
   if(chatBotCursor != undefined || chatBotCursor != null){
-      updateChatBot();
-      $('#managerDis').children('.ui.blue.segment').remove();
-      fetchManagerDis();
-      alert("Save operation done");
+      if(checkChatBotCursor()){
+        updateChatBot();
+        $('#managerDis').children('.ui.blue.segment').remove();
+        fetchManagerDis();
+        alert("Save operation done");
+      }
   }
   // $('#save-animation')
   //   .modal('show');
@@ -810,7 +977,7 @@ $('#_gen').click(()=>{
 });
 
 $('#btn_ask').click(()=>{
-  console.log('clicking');
+  // console.log('clicking');
   if($('#userQuestion').val() != ""){
       evalQuestion();
   }else {

@@ -136,8 +136,9 @@ hbsManagerAPI.post('/fetch',(req,res)=>{
                         }else if(filename == "editNodes.hbs"){
                             //problem token
                             const token = req.body.token;
+
                             trace(context,brain,token);
-                            //console.log(context);
+                            console.log(context);
                             res.render(filename,context);
                         }
                         
@@ -159,7 +160,9 @@ hbsManagerAPI.post('/fetch',(req,res)=>{
 
 hbsManagerAPI.post('/sentence',(req,res)=>{
     var date = new Date();
-    console.log(req.body);
+    console.log('===================',req.body);
+    var btnText = JSON.parse(req.body.btnText);
+    var btnIds = JSON.parse(req.body.btnIds);
     const context = {
         dataStyle: req.body.dataStyle,
         isRight : req.body.isRight == 'false' ? false : true,
@@ -172,12 +175,18 @@ hbsManagerAPI.post('/sentence',(req,res)=>{
     if(req.body.hasImage){
         context.avatarLink = req.body.avatarLink;
     }
+    //console.log(typeof req.body.btnText);
+
     if(req.body.hasChild == 'true'){
         context.hasChild = true;
         context.buttons = [];
-        req.body.btnText.forEach((text)=>{
-            context.buttons.push(text);
-        });
+        var temp = {};
+        for(var i=0;i<btnText.length;i++ ){
+            temp = {};
+            temp.btnText = btnText[i];
+            temp.btnId = btnIds[i];
+            context.buttons.push(temp);
+        }
     }
     console.log(context);
     res.render('bubble.hbs', context);

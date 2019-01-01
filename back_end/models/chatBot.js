@@ -16,6 +16,10 @@ var chatBotSchema = new mongoose.Schema({
     maxlength: 200,
     trim: true
   },
+  header:{
+    type: String,
+    default: "#5A5EB9"
+  },
   font:{
     style: { type: String , trime: true , default: "bubble1"},
     color: { type: String , trime: true , default: "black"}
