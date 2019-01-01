@@ -7,10 +7,10 @@
     var dataStyle = setting.dataStyle ? setting.dataStyle : "telegram";
     var isRight = setting.isRight == true ? setting.isRight : false;
     var isRead = setting.isRead ? setting.isRead : false;
-    var username = setting.username ? setting.username : chatBotCursor.chatBot.name;
+    var username = setting.username ? setting.username : "User";
     var hasImgae = setting.hasImage ? setting.hasImage : false;
-    var avatarLink = setting.avatarLink ? setting.avatarLink : chatBotCursor.chatBot.name;
-    var authorName = setting.authorName ? setting.authorName : chatBotCursor.chatBot.name;
+    var avatarLink = setting.avatarLink ? setting.avatarLink : "uu";
+    var authorName = setting.authorName ? setting.authorName : "uu";
     var content = setting.content ? setting.content : "";
     var hasChild = setting.hasChild == true ? true : false;
     var btnText = setting.btnText ? setting.btnText : null;
@@ -47,6 +47,7 @@
 
   var evalQuestion = ()=>{
     var question = $('#chat-input').val();
+    console.log(question);
     if(question == "" ){
       return ;
     }
@@ -63,7 +64,7 @@
           dataStyle: "telegram",
           content : question,
           isRight: true
-        },'.chst-logs',()=>{
+        },'.chat-logs',()=>{
           $('.chat-logs').stop().animate({
             srollTop: $('.chat-logs')[0].scrollHeight
           },1000);
@@ -77,7 +78,7 @@
               hasImage: true,
               avatarLink : "https://i.imgur.com/6oTWGHZ.png",
               btnIds : data.btnIds
-            },'.chst-logs',()=>{
+            },'.chat-logs',()=>{
               $('.chat-logs').stop().animate({
                 scrollTop: $('.chat-logs')[0].scrollHeight
               },1000)
@@ -138,7 +139,7 @@
     evalQuestion();
   });
 
-  $(document).on('click','.cu.chat .button',(ev)=>{
+  $(document).on('click','.cu.chat .button:not(#chat-submit)',(ev)=>{
     const t = $(ev.target)[0].id;
     evalOfficialQuestion(t)
   });

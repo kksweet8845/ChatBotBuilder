@@ -26,7 +26,7 @@ releaseChatBotAPI.post('/ask',(req,res)=>{
   var userQ = req.body.userQ;
   const chatBotToken = req.body.chatBotToken;
 
-  ChatBotBrain.findOneAndDelete({
+  ChatBotBrain.findOne({
     token: chatBotToken
   },(err,doc)=>{
     if(err){
@@ -37,9 +37,9 @@ releaseChatBotAPI.post('/ask',(req,res)=>{
       ChatBotBrain.evalQuery(doc,userQ,(err,ans,index)=>{
         var result;
         if (err) {
-          ans.A = "No matched answer";
+          
           result = {
-            reply: ans.A
+            reply: "No matched anwser"
           }
         }else {
           var hasChild = ans.btns.length > 0 ? true : false;
@@ -55,16 +55,15 @@ releaseChatBotAPI.post('/ask',(req,res)=>{
               });
             });
           }
-        }
 
-        result = {
-          reply : ans.A,
-          hasChild : hasChild,
-          btnText : btnText,
-          btnIds : btnIds
+          result = {
+            reply : ans.A,
+            hasChild : hasChild,
+            btnText : btnText,
+            btnIds : btnIds
+          }
         }
-
-        console.log("ans:",ans.A,"at releaseChatBot.js/56");
+        console.log("ans:",ans,"at releaseChatBot.js/56");
         res.status(200).send(result);
       });
     }

@@ -1,6 +1,6 @@
 $(document).ready(() => {
   var INDEX = 0;
-  $("#chat-submit").click(function(e) {
+  $().click(function(e) {
     e.preventDefault();
     var msg = $("#chat-input").val();
     if(msg.trim() == ''){

@@ -50,11 +50,11 @@ $(document).ready(()=>{
 
   var evalQuestion = ()=>{
     var question = $('#chat-input').val();
-    var chatBotToken = $('.chat-box')[0].id;
+    
 
     $.ajax({
       type: "POST",
-      url : "release/ask",
+      url : "/release/ask",
       data: {
         userQ: question,
         chatBotToken : chatBotToken
@@ -93,7 +93,6 @@ $(document).ready(()=>{
   }
 
   var evalOfficialQuestion = (id)=>{
-    var chatBotToken = $('.chat-box')[0].id;
     var proToken = id;
 
     $.ajax({
@@ -139,7 +138,16 @@ $(document).ready(()=>{
   
   
   
-  
+  $('#chat-submit').click(()=>{
+    evalQuestion();
+    console.log('clicking chat-submit');
+  });
+
+  $(document).on('click','.cu.chat .button',(ev)=>{
+    const t = $(ev.target)[0].id;
+    evalOfficialQuestion(t);
+    console.log("Error");
+  });
   
   
   
@@ -148,6 +156,7 @@ $(document).ready(()=>{
   $("#chat-circle").click(function() {    
     $("#chat-circle").toggle('scale');
     $(".chat-box").toggle('scale');
+    console.log("toggling");
   });
   
   $(".chat-box-toggle").click(function() {
@@ -155,3 +164,5 @@ $(document).ready(()=>{
     $(".chat-box").toggle('scale');
   });
 });
+
+var chatBotToken = "9zVd353gA9CyefAA55VenZab";
