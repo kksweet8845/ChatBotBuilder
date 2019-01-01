@@ -52,18 +52,6 @@ app.use('/hbs',hbsManagerAPI);
 app.use('/conversation',chatManagerAPI);
 app.use('/release',releaseChatBotAPI);
 app.use('/public',publicRenderAPI);
-tQuest',(req,res)=>{
-      var form = new formidable.IncomingForm();
-      form.parse(req,(err,fields,files)=>{
-        var question = fields['userQ'];
-        var obj = JSON.parse(fs.readFileSync(__dirname + '/uploaded/jsonFile/defaultQA.json','utf8'));
-        bigram.evalQuery(question,obj,(err,max_index)=>{
-          if(err) return res.send(err);
-          res.send(obj.conversations[max_index].A);
-        });
-      });
-});*/
-
 //app express
 // app.listen(port,() => {
 //   console.log('Listening on port:',port);
