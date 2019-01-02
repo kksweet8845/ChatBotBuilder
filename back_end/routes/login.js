@@ -67,7 +67,7 @@ loginAPI.post('/login',(req,res)=>{
           const sessionId = uid.sync(24);
           const SA = new SessionAccount("/",sessionId,data[0].userId,data[0].password,600000);
           sessionIDsTable.push(SA);
-          //console.log(sessionIDsTable);
+          console.log(sessionIDsTable);
 
           res.cookie('sessionId',sessionId );
           res.cookie('Path' , data[0].userId);
