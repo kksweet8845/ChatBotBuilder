@@ -293,6 +293,37 @@ var fetchUsername = ()=>{
   return un;
 };
 
+
+var bubbleColorPath = (id,color)=>{
+  switch(color){
+    case "#53A0DB":
+      id.href = "css/Rbubblecolor/RbubbleRed.css";
+      break;
+    case  "#F6D389":
+      id.href = "css/Rbubblecolor/RbubbleOrg.css";
+      break;
+    case "#F6F889":
+      id.href = "css/Rbubblecolor/RbubbleGre.css";
+      break;
+    case "#C4F889":
+      id.href = "css/Rbubblecolor/RbubbleGre.css";
+      break;
+    case "#C4F8D6":
+      id.href = "css/Rbubblecolor/RbubbleBlu.css";
+      break;
+    case "white":
+      id.href = "css/Rbubblecolor/RbubbleWhi.css";
+      break;
+    case "black":
+      id.href = "css/Rbubblecolor/RbubbleBlk.css";
+      break;
+    case "#E2E2E2":
+      id.href = "css/Rbubblecolor/RbubbleGry.css";
+      break;
+  }
+}
+
+
 var fetchCurStyle = ()=>{
   const bg = chatBotCursor.chatBot.background;
   const lbc = chatBotCursor.chatBot.bubble.left.color;
@@ -304,11 +335,11 @@ var fetchCurStyle = ()=>{
   const fc = chatBotCursor.chatBot.font.color;
   console.log("bg",bg);
   console.log("lbc",lbc);
-  console.log("lbs",lbc)
+  console.log("lbs",lbc);
   $(".display_section").addClass(fs);
   document.getElementById('window').style.backgroundColor = bg.color;
-  Lbubblecolor.href= lbc;
-  Rbubblecolor.href= rbc;
+  bubbleColorPath(Lbubblecolor,lbc);
+  bubbleColorPath(Rbubblecolor,rbc);
 
 }
 ////////////////////////////////////////////////////////////
@@ -619,12 +650,13 @@ var fetchChatBot = ()=>{
         console.log("Entering");
         chatBotCursor = data.content;
         console.log(chatBotCursor);
+        fetchCurStyle();
+        
       }
       //recall the style
       
-      fetchCurStyle();
       //recall the data in the body content (render)
-      fetchManagerDis();
+      //fetchManagerDis();
     },
     error: (err)=>{
       if(err.status == "400"){
@@ -634,6 +666,7 @@ var fetchChatBot = ()=>{
     }
 
   });
+  return true;
 };
 
 ///////////////////////////////////////////////////////
@@ -755,9 +788,24 @@ Handlebars.renderNewHandlebarsTemplateRelated = (withTemplate,description,Relate
 
 
 
-
+var initialChatBot = ()=>{
+  return new Promise((res,rej)=>{
+    const bool = fetchChatBot();
+    console.log(bool);
+    setTimeout(()=>{
+      if(bool){
+        res();
+      }else{
+        console.log("fetching chatBot occurs  error");
+      }
+    },1000)
+  });
+}
 //fetchatData
-fetchChatBot();
+initialChatBot().then(()=>{
+  console.log("fethcing manager display")
+  fetchManagerDis();
+});
 
 //initial fetch manager page proSegments
 
@@ -960,7 +1008,9 @@ $('#_save').click((ev)=>{
       if(checkChatBotCursor()){
         updateChatBot();
         $('#managerDis').children('.ui.blue.segment').remove();
-        fetchManagerDis();
+        initialChatBot().then(()=>{
+          fetchManagerDis();
+        });
         alert("Save operation done");
       }
   }

@@ -79,6 +79,17 @@ loginAPI.post('/login',(req,res)=>{
     });
 });
 
+loginAPI.post('/logout',(req,res)=>{
+  const sid = req.body.sessionId;
+  const username = req.body.userId;
+  console.log(sessionIDsTable);
+  sessionIDsTable = sessionIDsTable.filter((account,index)=>{
+                      return account.sessionId != sid && account.userId != username;
+                  });
+  console.log(sessionIDsTable);
+  res.status(200).send("Log out");
+});
+
 
 
 

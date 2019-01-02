@@ -52,6 +52,27 @@ $(document).ready(()=>{
 
   };
 
+  var logout = ()=>{
+    const sid = fetchSession();
+    const username = fetchUsername();
+    $.ajax({
+      type: "POST",
+      url: "session/logout",
+      data: {
+        sessionId : sid,
+        userId : username
+      },
+      success: ()=>{
+        console.log("Log out");
+        checkSignIn();
+      },
+      error: (err)=>{
+        console.log(err);
+      } 
+
+    });
+  }
+
 checkSignIn();
 
 
@@ -72,6 +93,10 @@ checkSignIn();
   $('#cancelBtn').click(()=>{
     $('input[name="chatBotName"]').val('');
     $('#chatBotDescription').val('');
+  });
+
+  $('#logout').click(()=>{
+    logout();
   });
 
 
@@ -169,6 +194,7 @@ checkSignIn();
         }
       });
   });
+
 
 
   var ExistChatBot = [];

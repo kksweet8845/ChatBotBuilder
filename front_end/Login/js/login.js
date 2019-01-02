@@ -7,7 +7,7 @@ $(document)
 
                 fields: {
                     account: {
-                        identifier: 'account',
+                        identifier: 'username'/*name of input tag*/ ,
                         rules: [
                             {
 
@@ -26,7 +26,7 @@ $(document)
                         ]
                     },
                     password: {
-                        identifier: 'password',
+                        identifier: 'passwd' /*name of input tag*/,
                         rules: [
                             {
 
