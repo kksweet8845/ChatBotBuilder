@@ -32,14 +32,6 @@ hbs.registerPartials(__dirname + '/views/partials');
 app.set('view engine','hbs');
 
 
-/*For https purpose*/
-//var https = require('https');
-
-/*var options = {
-    key: fs.readFileSync('/etc/letsencrypt/live/chatbot.hmkrl.com/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/chatbot.hmkrl.com/cert.pem')
-};*/
-
 /*use body-parser to parse request*/
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -52,60 +44,11 @@ app.use('/hbs',hbsManagerAPI);
 app.use('/conversation',chatManagerAPI);
 app.use('/release',releaseChatBotAPI);
 app.use('/public',publicRenderAPI);
-/*app.post('/ask',(req,res)=>{
-  var form = new formidable.IncomingForm();
-  form.parse(req,(err,fields,files)=>{
-    var question = fields['userQ'];
-    var obj = JSON.parse(fs.readFileSync(__dirname + '/uploaded/jsonFile/defaultQA.json','utf8'));
-    bigram.evalQuery(question,obj,(err,max_index)=>{
-      if(err) return res.send(err);
-      res.send(obj.conversations[max_index].A);
-    });
-  });
-});*/
-/*
-app.post('/testQuest',(req,res)=>{
-      var form = new formidable.IncomingForm();
-      form.parse(req,(err,fields,files)=>{
-        var question = fields['userQ'];
-        var obj = JSON.parse(fs.readFileSync(__dirname + '/uploaded/jsonFile/defaultQA.json','utf8'));
-        bigram.evalQuery(question,obj,(err,max_index)=>{
-          if(err) return res.send(err);
-          res.send(obj.conversations[max_index].A);
-        });
-      });
-});*/
-//upload data schema
-/*app.post('/server',(req,res)=>{
-      var form = new formidable.IncomingForm();
-      form.uploadDir = __dirname;
-      form.parse(req,(err,fields,files)=>{
-        var oldPath = files.fileUpload.path;
-        var newPath = __dirname + '/uploaded/txtFile/'+files.fileUpload.name;
-        fs.rename(oldPath,newPath,(err)=>{
-          if(err) throw err;
-          res.status(200).send(files.fileUpload.name);
-          res.end();
 
-          var bigramObj;
-          bigram.txtToJson(newPath,(obj)=>{
-            bigram.schemaFormation(obj,(obj)=>{
-              var json = JSON.stringify(obj);
-              fs.writeFile(__dirname+'/uploaded/jsonFile/defaultQA.json',json,(err)=>{
-                console.log('The file has been saved!');
-              });
-            });
-          });
-        });
-      });
-});*/
 //app express
 app.listen(port,() => {
   console.log('Listening on port:',port);
 });
 
 
-/*
-https.createServer(options, app).listen(port, function () {
-    console.log('Https server listening on port ' + port);
-});*/
+

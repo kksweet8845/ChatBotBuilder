@@ -291,6 +291,7 @@ chatBotOpAPI.post('/create',(req,res)=>{
 chatBotOpAPI.post('/edit',(req,res)=>{
     //console.log(sessionIDsTable.findBySId(req.body.sessionId));
     var sessionObj = sessionIDsTable.findBySId(req.body.sessionId);
+    //console.log(sessionObj);
     sessionObj.path = "/" + req.body.chatBotToken;
     //console.log(sessionObj);
     res.send();
@@ -326,6 +327,59 @@ chatBotOpAPI.post('/generate',(req,res)=>{
            });
         }
     })
+});
+
+chatBotOpAPI.post('/del',(req,res)=>{
+  const chatBotToken = req.body.chatBotToken;
+  User.findOne({
+    userId: req.body.username
+  },(err,doc)=>{
+      if(err){
+        console.log(err);
+        return res.status(400).send("No match user");
+      }
+
+      if(doc != undefined || doc != null){
+        doc.chatBots = doc.chatBots.filter((chatBot)=>{
+                          return chatBot.token != chatBotToken;
+                      });
+        
+      }
+      doc.save().then(()=>{
+        ChatBotBrain.deleteOne({
+          token : chatBotToken
+        },(err)=>{
+          if(err){
+            console.log(err);
+            return res.status(400).send("No match chatBotBrain");
+          }
+        });
+        res.status(200).send(doc);
+      });;
+  });
+});
+
+chatBotOpAPI.post('/delPro',(req,res)=>{
+  const chatBotToken = req.body.chatBotToken;
+  const proToken = req.body.proToken;
+  ChatBotBrain.findOne({
+    token : chatBotToken
+  },(err,doc)=>{
+    if(err){
+      console.log(err);
+      return res.status(400).send("No matched chatBotbrain");
+    }
+    if(doc){
+      console.log(doc);
+      doc.chatBotDialogues = doc.chatBotDialogues.filter((dialogue)=>{
+        return dialogue.token != proToken;
+      });
+
+      doc.save().then(()=>{
+        res.status(200).send(doc);
+      });
+    }
+  });
 });
 
 

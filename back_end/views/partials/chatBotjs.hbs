@@ -60,6 +60,8 @@
         chatBotToken : chatBotToken
       },
       success: (data)=>{
+        console.log(data.hasChild);
+        console.log(typeof hasCild);
         Handlebars.renderQuestionTemplate({
           dataStyle: "telegram",
           content : question,
@@ -70,7 +72,7 @@
           },1000);
           setTimeout(()=>{
             Handlebars.renderQuestionTemplate({
-              hasChile: data.hasChild,
+              hasChild: data.hasChild,
               btnText: data.btnText,
               dataStyle: "telegram",
               content: data.reply,

@@ -1,4 +1,20 @@
 $(document).ready(()=>{
+
+  ///////////////////////////////////////////////////
+  //event listener section
+  //var deleteBtn = document.getElementById('delete');
+  //var cancelDelBtn = document.getElementById('cancelDelBtn');
+  //var approveDelBtn = document.getElementById('approveDelBtn');
+
+  
+  //pop up delete the chatBot
+  
+  var popCheckDelChatBot = () =>{
+      $('#delChatBot')
+        .modal('show');
+  }
+
+
   //chack log in
   var fetchSession = ()=>{
     var sId = document.cookie.match(/sessionId=[^;]+/);
@@ -80,7 +96,7 @@ checkSignIn();
 
   //create new chatBot
   $('button.ui.blue.icon').click(()=>{
-    $('.mini.modal')
+    $('#createChatBot')
       .modal('show');
   });
   $('#createBtn').click(()=>{
@@ -125,7 +141,7 @@ checkSignIn();
     str += "          <div class=\"three wide column\">";
     str += "            <div class=\"ui buttons\">";
     str += "              <button class=\"ui button\" id=\"edit\" name=\"node\" value=\"" + name +"\">Edit</button>";
-    str += "              <button class=\"ui button\">Delete</button>";
+    str += "              <button class=\"ui button\" id=\"delete\">Delete</button>";
     str += "            </div>";
     str += "          </div>";
     str += "        </div>";
@@ -175,10 +191,13 @@ checkSignIn();
   //edit Btn clicked
   $(document).on('click','button[id="edit"]',(ev)=>{
       var name = ev.currentTarget.value;
+      console.log(name);
       var sessionId = fetchSession();
 
 
+
       const token = nameToObj(name).token;
+      console.log(token);
       $.ajax({
         type:"POST",
         url: "/chatBot/edit",
@@ -196,7 +215,68 @@ checkSignIn();
   });
 
 
+  $('#aproveDelBtn').click((ev)=>{
+    
+    console.log(name);
+    
+    if(delChatBot){
+      var chatBotToken = delChatBot.token;
+      deleteChatBot(chatBotToken);
+    }else {
+      //refreshData();
+      console.log("No chatBot to be deleted");
+    }
+  });
+
+  $(document).on('click','button[id="delete"]',(ev)=>{
+      popCheckDelChatBot();
+      var name = $(ev.target).prev().val();
+      var curChatBot = nameToObj(name);
+      delChatBot = curChatBot;
+
+  });
+
+
+
+//////////////////////////////////////////
+//delete a chatBot
+  var deleteChatBot = (token)=>{
+    var username = fetchUsername();
+      $.ajax({
+        type: "POST",
+        url: "/chatBot/del",
+        data:{
+          chatBotToken: token,
+          username: username
+        },
+        success: (data)=>{
+          if(data){
+            console.log("delete complete");
+            ExistChatBot = [];
+            /*data.chatBots.forEach((chatBot)=>{
+              ExistChatBot.push(chatBot);
+            });*/
+            refreshData();
+          }
+        },
+        error: (err)=>{
+          console.log(err);
+        }
+      })
+  }
+
+  var refreshData = ()=>{
+    $('.ui.segments').children().remove();
+    checkSignIn();
+  }
+
+  
+
+
+
+  //deleteBtn.addEventListener("click",popCheckDelChatBot());
+  //approveDelBtn.addEventListener("click",deleteChatBot());
 
   var ExistChatBot = [];
-
+  var delChatBot;
 });

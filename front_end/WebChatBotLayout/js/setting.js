@@ -267,6 +267,35 @@ var saveProblemByEvent = (ev)=>{
   console.log(chatBotCursor);
 }
 
+///////////////////////////////////////////////////////
+////////////////// delete /////////////////////////////
+//////////////////////////////////////////////////////
+
+var deleteProSegment = (ev)=>{
+  var proToken = $(ev.target).parent().parent().parent().parent().parent().parent()[0].id;
+  var chatBotToken = chatBotCursor.chatBot.token;
+  var ele = $('#managerDis').children('#'+proToken);
+  
+  console.log(ele);
+  $.ajax({
+    type: "POST",
+    url: "/chatBot/delPro",
+    data:{
+      chatBotToken: chatBotToken,
+      proToken: proToken
+    },success: (data)=>{
+      if(data){
+        chatBotCursor.chatBotBrain = data;
+        ele.remove();
+      }
+    },error: (err)=>{
+      console.log(err);
+    }
+  });
+}
+
+
+
 
 
   //////////////////////////////////////////////
@@ -984,6 +1013,13 @@ $('#saveAll').click((ev)=>{
     updateChatBot();
   }
   
+});
+
+
+//////////////////////////////////////////////////////////////////
+//delete the prosegment
+$(document).on('click','#delete',(ev)=>{
+  deleteProSegment(ev);
 });
 
 

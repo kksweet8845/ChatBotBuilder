@@ -71,7 +71,7 @@ releaseChatBotAPI.post('/ask',(req,res)=>{
 });
 
 releaseChatBotAPI.post('/standard',(req,res)=>{
-  const chatBotToken = req.body.ChatBotToken;
+  const chatBotToken = req.body.chatBotToken;
   const proToken = req.body.token;
   ChatBotBrain.findOne({
     token: chatBotToken
@@ -82,25 +82,27 @@ releaseChatBotAPI.post('/standard',(req,res)=>{
     }
 
     doc.chatBotDialogues.forEach((dialogue)=>{
-      var hasChild = dialogue.btns.length ? true : false;
-      var btnText = [];
-      var btnIds = [];
-      if(hasChild){
-        dialogue.btns.forEach((token)=>{
-          btnIds.push(token);
-          var d = findProblemByToken(doc,token);
-          btnText.push(d.Q);
-        });
-      }
-
-      const result = {
-        question : dialogue.Q,
-        reply: dialogue.A,
-        hasChild : hasChild,
-        btnIds: btnIds,
-        btnText : btnText
-      }
+      if(dialogue.token == proToken){
+        var hasChild = dialogue.btns.length ? true : false;
+        var btnText = [];
+        var btnIds = [];
+        if(hasChild){
+          dialogue.btns.forEach((token)=>{
+            btnIds.push(token);
+            var d = findProblemByToken(doc,token);
+            btnText.push(d.Q);
+          });
+        }
+  
+        const result = {
+          question : dialogue.Q,
+          reply: dialogue.A,
+          hasChild : hasChild,
+          btnIds: btnIds,
+          btnText : btnText
+        }
       res.status(200).send(result);
+      }
     });
   });
 });
