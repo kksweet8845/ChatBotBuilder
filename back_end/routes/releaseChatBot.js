@@ -124,27 +124,51 @@ releaseChatBotAPI.post('/generate',(req,res)=>{
         });
         var chatBot = chatBots[0];
 
-        var newChatBot = new ChatBot({
-          token: chatBot.token,
-          name: chatBot.name,
-          description: chatBot.description,
-          header : chatBot.header,
-          font:chatBot.font,
-          bubble : chatBot.bubble,
-          background: chatBot.background,
-          image : chatBot.image,
-
-        });
-
-        newChatBot.save().then((doc)=>{
-          var url = genLink(doc.token,'localhost:11021');
-          var iframe = genIfram(url);
-
-          const result = {
-            iframe : iframe
+        ChatBot.findOne({
+          token: chatBot.token
+        },(err,doc)=>{
+          if(err){
+            console.log(err);
+            return res.status(400).send();
           }
-          res.status(200).send(result);
+          if(doc != undefined || doc != null){
+            doc.font = chatBot.font;
+            doc.bubble = chatBot.bubble;
+            doc.background = chatBot.background;
+            doc.image = chatBot.image;
+            doc.save().then((doc)=>{
+              var url = genLink(doc.token,'localhost:11021');
+              var iframe = genIfram(url);
+              const result = {
+                iframe: iframe
+              }
+              res.status(200).send(result);
+            });
+          }else{
+            var newChatBot = new ChatBot({
+              token: chatBot.token,
+              name: chatBot.name,
+              description: chatBot.description,
+              header : chatBot.header,
+              font:chatBot.font,
+              bubble : chatBot.bubble,
+              background: chatBot.background,
+              image : chatBot.image,
+    
+            });
+            newChatBot.save().then((doc)=>{
+              var url = genLink(doc.token,'localhost:11021');
+              var iframe = genIfram(url);
+    
+              const result = {
+                iframe : iframe
+              }
+              res.status(200).send(result);
+            });
+          }
+          
         });
+
       }
     });
   }else { 

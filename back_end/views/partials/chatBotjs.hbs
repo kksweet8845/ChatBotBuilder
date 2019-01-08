@@ -67,7 +67,7 @@
           content : question,
           isRight: true
         },'.chat-logs',()=>{
-          $('.chat-logs').stop().animate({
+            $('.chat-logs').animate({
             srollTop: $('.chat-logs')[0].scrollHeight
           },1000);
           setTimeout(()=>{
@@ -83,7 +83,7 @@
             },'.chat-logs',()=>{
               $('.chat-logs').stop().animate({
                 scrollTop: $('.chat-logs')[0].scrollHeight
-              },1000)
+              },1000);
             });
           },1000);
         });
@@ -139,11 +139,13 @@
   
   $('#chat-submit').click(()=>{
     evalQuestion();
+    $('#chat-input').val('');
   });
 
   $(document).on('click','.cu.chat .button:not(#chat-submit)',(ev)=>{
     const t = $(ev.target)[0].id;
-    evalOfficialQuestion(t)
+    evalOfficialQuestion(t);
+
   });
   
   

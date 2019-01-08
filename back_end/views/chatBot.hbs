@@ -4,9 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://kksweet8845.github.io/ChatBotBuilder/ChatUI/css/ChatUI.css" rel="stylesheet">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/button.min.css" rel="stylesheet">
     <style type="text/css">
+        {{>ChatUI}}
+
         .cu.chat[data-style="telegram"] .message.right > .content {
           background-color: : {{lbc}};
         }
@@ -167,9 +168,8 @@
         }
         .chat-logs {
           padding:15px; 
-          height:100%;
+          height:86%!important;
           overflow-y:scroll;
-          background: transparent;
         }
         
         .chat-logs::-webkit-scrollbar-track
@@ -199,6 +199,10 @@
         
         input:focus {
           border: 1px #5A5EB9 solid!important;
+        }
+
+        .ui.vertical.buttons .button {
+          width: inherit;
         }
 
     </style>
