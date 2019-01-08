@@ -362,9 +362,9 @@ var fetchCurStyle = ()=>{
 
   const fs = chatBotCursor.chatBot.font.style;
   const fc = chatBotCursor.chatBot.font.color;
-  console.log("bg",bg);
-  console.log("lbc",lbc);
-  console.log("lbs",lbc);
+  //console.log("bg",bg);
+  //console.log("lbc",lbc);
+  //console.log("lbs",lbc);
   $(".display_section").addClass(fs);
   document.getElementById('window').style.backgroundColor = bg.color;
   bubbleColorPath(Lbubblecolor,lbc);
@@ -402,11 +402,11 @@ var updateChatBot = ()=>{
       sessionId: sid
     },
     success: (data)=>{
-      console.log(data);
+      //console.log(data);
       if(data == "OK"){
         //fetchChatBot();
-        console.log("fetching data");
-        console.log(data);
+        //console.log("fetching data");
+        //console.log(data);
       }
     },
     error: (err)=>{
@@ -433,13 +433,13 @@ var saveAndGen = ()=>{
       sessionId: sid
     },
     success: (data)=>{
-      console.log("saveAndGen");
+      //console.log("saveAndGen");
       if(data == "OK"){
         fetchChatBot();
         genBiset(chatBotCursor.chatBot.token,sid);
-        console.log("generateing data");
-        console.log("fetching data");
-        console.log(data);
+        //console.log("generateing data");
+        //console.log("fetching data");
+        //console.log(data);
       }
     },
     error: (err)=>{
@@ -457,9 +457,9 @@ var genBiset = (token,sid)=>{
       sessionId: sid
     },
     success: (data)=>{
-      console.log(data);
+      //console.log(data);
       if(data){
-        console.log("link");
+        //console.log("link");
         chatBotCursor.chatBotBrain = data
         alert("Generation finished");
         genLink(chatBotCursor.chatBot.token);
@@ -674,9 +674,9 @@ var fetchChatBot = ()=>{
       sessionId: sid
     },
     success: (data)=>{
-      console.log(data.status);
+      //console.log(data.status);
       if(data.status="OK"){
-        console.log("Entering");
+        //console.log("Entering");
         chatBotCursor = data.content;
         console.log(chatBotCursor);
         fetchCurStyle();
@@ -820,7 +820,7 @@ Handlebars.renderNewHandlebarsTemplateRelated = (withTemplate,description,Relate
 var initialChatBot = ()=>{
   return new Promise((res,rej)=>{
     const bool = fetchChatBot();
-    console.log(bool);
+    //console.log(bool);
     setTimeout(()=>{
       if(bool){
         res();

@@ -67,7 +67,9 @@ hbsManagerAPI.post('/create',(req,res)=>{
         });
     }else if(filename == "editNode.hbs"){
         res.render(req.body.filename,{
-            dialogueName: req.body.description
+            dialogueName: req.body.description,
+            Qcontext: "Question",
+            Acontext: "Answer"
         });
     }else if(filename == "questionFlow.hbs"){
         res.render(req.body.filename,{
@@ -168,7 +170,7 @@ hbsManagerAPI.post('/sentence',(req,res)=>{
         isRight : req.body.isRight == 'false' ? false : true,
         isRead : req.body.isRead == 'false' ? false : true,
         hasImage : req.body.hasImage ,
-        authorName : req.body.authorName,
+        authorName : req.body.username,
         content : req.body.content,
         curTime : date.getHours() + ':' + date.getMinutes()
     }
