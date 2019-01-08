@@ -128,7 +128,7 @@
 /*  RWD  */
 @media (max-width: 768px) {
   .cu.chat .message > .content {
-    max-width: 80vw;
+    max-width: 40vw;
   }
   .cu.chat .message img, .cu.chat .message video, .cu.chat .message iframe {
     max-width: 100%;
