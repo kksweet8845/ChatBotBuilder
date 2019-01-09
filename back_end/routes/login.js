@@ -19,7 +19,7 @@ loginAPI.post('/check',(req,res)=>{
   if(sessionIDsTable.length == 0){
     res.status(400).send();
   }
-  sessionIDsTable.forEach((account)=>{
+  /*sessionIDsTable.forEach((account)=>{
     //console.log(account);
       if(account.sessionId == req.body.sessionId && account.userId == req.body.username){
         User.find({
@@ -44,7 +44,37 @@ loginAPI.post('/check',(req,res)=>{
       }else {
         res.send();
       }
-  });
+  });*/
+  for(var i=0,num = 0;i<sessionIDsTable.length;i++){
+    var account = sessionIDsTable[i];
+    if(account.sessionId == req.body.sessionId && account.userId == req.body.username){
+      User.find({
+        userId: req.body.username,
+      },(err,data)=>{
+        if(err) {
+          console.log(err);
+          res.status(400).send("Not login or Not sign up yet");
+          return;
+        }
+        //console.log(data);
+        if(data.length != 0){
+          //console.log(`${data[0].userId}: `,data);
+          var result = {
+            content: data[0],
+            sign: "signed"
+          }
+          return res.send(result);
+
+        }
+      });
+      num++;
+    }
+  }
+  console.log("Sendinginging");
+  if(num == 0)
+  res.status(400).send();
+
+  
 });
 
 loginAPI.post('/login',(req,res)=>{
