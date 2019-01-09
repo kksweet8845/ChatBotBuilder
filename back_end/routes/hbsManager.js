@@ -165,6 +165,7 @@ hbsManagerAPI.post('/sentence',(req,res)=>{
     console.log('===================',req.body);
     var btnText = JSON.parse(req.body.btnText);
     var btnIds = JSON.parse(req.body.btnIds);
+    var min = date.getMinutes();
     const context = {
         dataStyle: req.body.dataStyle,
         isRight : req.body.isRight == 'false' ? false : true,
@@ -172,7 +173,7 @@ hbsManagerAPI.post('/sentence',(req,res)=>{
         hasImage : req.body.hasImage ,
         authorName : req.body.username,
         content : req.body.content,
-        curTime : date.getHours() + ':' + date.getMinutes()
+        curTime : date.getHours() + ':' + (min >= 10 ? min: '0'+min)
     }
     if(req.body.hasImage){
         context.avatarLink = req.body.avatarLink;
