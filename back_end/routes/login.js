@@ -70,11 +70,12 @@ loginAPI.post('/check',(req,res)=>{
       num++;
     }
   }
-  console.log("Sendinginging");
-  if(num == 0)
-  res.status(400).send();
+ 
+  if(num == 0){
+    console.log("Sendinginging");
+    res.status(400).send();
+  }
 
-  
 });
 
 loginAPI.post('/login',(req,res)=>{
